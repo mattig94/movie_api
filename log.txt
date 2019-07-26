@@ -7,3 +7,15 @@ Time Stamp: Thu Jul 25 2019 16:44:49 GMT-0500 (GMT-05:00)
 URL: /favicon.ico
 Time Stamp: Thu Jul 25 2019 16:45:46 GMT-0500 (GMT-05:00)
 
+URL: /
+Time Stamp: Fri Jul 26 2019 10:31:00 GMT-0500 (GMT-05:00)
+
+URL: /favicon.ico
+Time Stamp: Fri Jul 26 2019 10:31:00 GMT-0500 (GMT-05:00)
+
+URL: /documentation
+Time Stamp: Fri Jul 26 2019 10:31:13 GMT-0500 (GMT-05:00)
+
+URL: /favicon.ico
+Time Stamp: Fri Jul 26 2019 10:31:13 GMT-0500 (GMT-05:00)
+
