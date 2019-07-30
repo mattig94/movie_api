@@ -2,10 +2,136 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>myFlix</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
   <body>
-    <h1>myFlix</h1>
-    <p>This movie API allows users to access information about different movies, directors, and genres. Users will be able create an account where they can curate a personal list of their favorite movies.</p>
+    <div class="container">
+      <h1>myFlix</h1>
+
+      <p>This movie API allows users to access information about different movies, directors, and genres. Users will be able create an account where they can curate a personal list of their favorite movies.</p>
+
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Output Overview</th>
+            <th scope="col">Endpoint URL</th>
+            <th scope="col">Method</th>
+            <th scope="col">Request Format</th>
+            <th scope="col">Response Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Return a list of all movies</td>
+            <td>&#47;movies</td>
+            <td>GET</td>
+            <td>N&#47;A</td>
+            <td>Returns a json object of all the movies and their details. &#40;Note that the trailing comma indicates that there are more entries following it&#41;<br>
+            example&#58;<br>
+            &#123;<br>
+            "title"&#58; "Pride and Prejudice",<br>
+            "description"&#58; "In this adaptation of Jane Austen's beloved novel, Elizabeth Bennet lives with her mother, father and sisters in the English countryside. As the eldest, she faces mounting pressure from her parents to marry. When the outspoken Elizabeth is introduced to the handsome and upper-class Mr. Darcy, sparks fly. Although there is obvious chemistry between the two, Darcy's overly reserved nature threatens the fledgling relationship.",<br>
+            "genre"&#58; &#91;"dram", "romance"&#93;,<br>
+            "director"&#58; "Joe Wright",<br>
+            "releaseYear"&#58; "2005",<br>
+            "imgURL"&#58; "prideandprejudice.jpg",<br>
+            "featured"&#58; "false"<br>
+            &#125;,</td>
+          </tr>
+          <tr>
+            <td>Return data &#40;description, genre, director, image URL, whether it’s featured or no&#41; about a single movie by title to the user</td>
+            <td>&#47;movies&#47;&#91;title&#93;</td>
+            <td>GET</td>
+            <td>Include movie &#91;title&#93; in URL using URL encoding where there are spaces or other special characters</td>
+            <td>Returns a json object of the specified database entry. If there  is no movie in the database with that name, a general error message will show<br>
+              example&#58;<br>
+              &#123;<br>
+              "title"&#58; "What a Girl Wants",<br>
+              "description"&#58; "On a whim, American teenager Daphne boards a plane to England to find the father she never met. Upon arriving there, though, she makes a startling discovery&#58; The man she's looking for is Lord Henry Dashwood, a member of the British upper class, who is running for political office. Lord Henry didn't know Daphne existed, but he welcomes her into his life. However, she isn't so sure -- and his family and his current betrothed look on her disapprovingly.",<br>
+              "genre"&#58; &#91;"comedy", "drama", "family"&#93;,<br>
+              "director"&#58; "Dennie Gordon",<br>
+              "releaseYear"&#58; "2003",<br>
+              "imgURL"&#58; "whatagirlwants.jpg",<br>
+              "featured"&#58; "false"<br>
+            &#125;</td>
+          </tr>
+          <tr>
+            <td>Return data about a genre &#40;description&#41; by name&#47;title &#40;e.g., “Thriller”&#41;</td>
+            <td>&#47;genres&#47;&#91;name&#93;</td>
+            <td>GET</td>
+            <td>Include genre &#91;name&#93; in URL. All genres are lowercase with no special characters</td>
+            <td>Returns a json object of the specified database entry. If the specified genre is not in the database, a general error message will show.<br>
+              example&#58; <br>
+              &#123;<br>
+              "name"&#58; "drama",<br>
+              "description"&#58; "Serious presentations or stories with settings or life situations that portray realistic characters in conflict with either themselves, others, or forces of nature. A dramatic film shows us human beings at their best, their worst, and everything in-between. Each of the types of subject-matter themes have various kinds of dramatic plots. Dramatic films are probably the largest film genre because they include a broad spectrum of films."<br>
+              &#125;</td>
+          </tr>
+          <tr>
+            <td>Return data about a director &#40;bio, birth year, death year&#41; by name</td>
+            <td>&#47;directors&#47;&#91;name&#93;</td>
+            <td>GET</td>
+            <td>Include director &#91;name&#93; in URL. Names are formatted &#91;first name&#93;%20&#91;last name&#93;</td>
+            <td>Returns a json object of the specified database entry. If the specified director is not in the database, a general error message will show.<br>
+            example&#58;<br>
+            &#123;<br>
+            "name"&#58; "Gary Winick",<br>
+            "bio"&#58; "Gary Winick attended and graduated Tufts University in 1984, he went on to receive Master of Fine Arts degree from both the University of Texas at Austin and the AFI Conservatory. \nWinick directed the films Out of the Rain &#40;1991&#41;, Tadpole &#40;2000&#41;, 13 Going on 30 &#40;2004&#41;, and the live-action remake of Charlotte's Web &#40;2006&#41;. His final films were Bride Wars and Letters to Juliet. He produced such films as Pieces of April &#40;2003&#41; and November &#40;2004&#41; through his New York City-based independent film production company InDigEnt, founded in 1999.",<br>
+            "birthYear"&#58; "1961",<br>
+            "deathYear"&#58; "2011"<br>
+            &#125;</td>
+          </tr>
+          <tr>
+            <td>Allow new user to register</td>
+            <td>&#47;users</td>
+            <td>POST</td>
+            <td>  &#123;<br>
+              "username"&#58; "",<br>
+              "password"&#58; "",<br>
+              "email"&#58; "",<br>
+              "dateOfBirth"&#58; "",<br>
+              "favorites"&#58; &#91;&#93;<br>
+             &#125;</td>
+            <td>If the user was added a message reading "&#91;username&#93; was successfully added" will show<br>
+            If there is no username included a message reading "Username is required for registration" will show<br>
+            Other wise a general error message will show</td>
+          </tr>
+          <tr>
+            <td>Allow users to update their user info &#40;username, password, email, date of birth&#41;</td>
+            <td>&#47;users&#47;&#91;username&#93;</td>
+            <td>PUT</td>
+            <td>TBD</td>
+            <td>A message reading "User information has been updated" shows</td>
+          </tr>
+          <tr>
+            <td>Allow users to add a movie to their list of favorites</td>
+            <td>&#47;users&#47;&#91;username&#93;&#47;favorites&#47;&#91;title&#93;</td>
+            <td>PUT</td>
+            <td>URL needs the user's &#91;username&#93; and movie &#91;title&#93; to be added using URL encoding where there are spaces or other special characters</td>
+            <td>A message reading "&#91;title&#93; was added to your favorites!" shows</td>
+          </tr>
+          <tr>
+            <td>Allow users to remove a movie from their list of favorites</td>
+            <td>&#47;users&#47;&#91;username&#93;&#47;favorites&#47;&#91;title&#93;</td>
+            <td>DELETE</td>
+            <td>URL needs the user's &#91;username&#93; and movie &#91;title&#93; to be removed from list using URL encoding where there are spaces or other special characters</td>
+            <td>A message reading "&#91;title&#93; was removed from your favorites" shows</td>
+          </tr>
+          <tr>
+            <td>Allow existing users to deregister</td>
+            <td>&#47;users&#47;&#91;username&#93;</td>
+            <td>DELETE</td>
+            <td>URL needs user's &#91;username&#93; associated with the account that they want to remove</td>
+            <td>A message reading "&#91;username&#93;'s account was deleted" shows</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
