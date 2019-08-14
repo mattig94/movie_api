@@ -88,43 +88,79 @@
             <td>&#47;users</td>
             <td>POST</td>
             <td>  &#123;<br>
-              "username"&#58; "",<br>
-              "password"&#58; "",<br>
-              "email"&#58; "",<br>
+              "username"&#58; "required",<br>
+              "password"&#58; "required",<br>
+              "email"&#58; "required",<br>
               "dateOfBirth"&#58; "",<br>
               "favorites"&#58; &#91;&#93;<br>
              &#125;</td>
-            <td>If the user was added a message reading "&#91;username&#93; was successfully added" will show<br>
-            If there is no username included a message reading "Username is required for registration" will show<br>
-            Other wise a general error message will show</td>
+            <td>If there is already a user with the that username an error will send. If not a 201 status will be returned along with the json object of the new user<br>
+              example:<br>
+              &#123;<br>
+                "username"&#58; "user1",<br>
+                "password"&#58; "test123",<br>
+                "email"&#58; "user1@test.com",<br>
+                "dateOfBirth"&#58; "",<br>
+                "favorites"&#58; &#91;&#93;<br>
+               &#125;</td>
+          </tr>
+          <tr>
+            <td>Allow users to add a movie to their list of favorites</td>
+            <td>&#47;users&#47;&#91;username&#93;&#47;favorites&#47;&#91;movieID&#93;</td>
+            <td>POST</td>
+            <td>URL needs the user's &#91;username&#93; to be added using URL encoding where there are spaces or other special characters.</td>
+            <td>The json object of the user is returned with the newly added favorite.<br>
+              example:<br>
+              &#123;<br>
+                "username"&#58; "user1",<br>
+                "password"&#58; "test123",<br>
+                "email"&#58; "user1@test.com",<br>
+                "dateOfBirth"&#58; "",<br>
+                "favorites"&#58; &#91;5d49db6a2305813734fdf77f&#93;<br>
+               &#125;</td>
           </tr>
           <tr>
             <td>Allow users to update their user info &#40;username, password, email, date of birth&#41;</td>
             <td>&#47;users&#47;&#91;username&#93;</td>
             <td>PUT</td>
-            <td>TBD</td>
-            <td>A message reading "User information has been updated" shows</td>
-          </tr>
-          <tr>
-            <td>Allow users to add a movie to their list of favorites</td>
-            <td>&#47;users&#47;&#91;username&#93;&#47;favorites&#47;&#91;title&#93;</td>
-            <td>PUT</td>
-            <td>URL needs the user's &#91;username&#93; and movie &#91;title&#93; to be added using URL encoding where there are spaces or other special characters</td>
-            <td>A message reading "&#91;title&#93; was added to your favorites!" shows</td>
+            <td>&#123;<br>
+              "username"&#58; "user1",<br>
+              "password"&#58; "5678test",<br>
+              "email"&#58; "user1@test.com",<br>
+              "dateOfBirth"&#58; "",<br>
+             &#125;</td></td>
+            <td>A json object of the updated user is returned.<br>
+              example with updated password: <br>
+              &#123;<br>
+                "username"&#58; "user1",<br>
+                "password"&#58; "5678test",<br>
+                "email"&#58; "user1@test.com",<br>
+                "dateOfBirth"&#58; "",<br>
+                "favorites"&#58; &#91;&#93;<br>
+               &#125;</td>
           </tr>
           <tr>
             <td>Allow users to remove a movie from their list of favorites</td>
-            <td>&#47;users&#47;&#91;username&#93;&#47;favorites&#47;&#91;title&#93;</td>
+            <td>&#47;users&#47;&#91;username&#93;&#47;favorites&#47;&#91;movieID&#93;</td>
             <td>DELETE</td>
-            <td>URL needs the user's &#91;username&#93; and movie &#91;title&#93; to be removed from list using URL encoding where there are spaces or other special characters</td>
-            <td>A message reading "&#91;title&#93; was removed from your favorites" shows</td>
+            <td>URL needs the user's &#91;username&#93; and &#91;movieID&#93; to be removed from favorites list</td>
+            <td>A json object of the user is returned with the requested movieID removed from user's favorites list<br>
+            example with the previously added &#91;movieID&#93; of "5d49db6a2305813734fdf77f" removed: <br>
+            &#123;<br>
+              "username"&#58; "user1",<br>
+              "password"&#58; "5678test",<br>
+              "email"&#58; "user1@test.com",<br>
+              "dateOfBirth"&#58; "",<br>
+              "favorites"&#58; &#91;&#93;<br>
+             &#125;
+            </td>
           </tr>
           <tr>
             <td>Allow existing users to deregister</td>
             <td>&#47;users&#47;&#91;username&#93;</td>
             <td>DELETE</td>
             <td>URL needs user's &#91;username&#93; associated with the account that they want to remove</td>
-            <td>A message reading "&#91;username&#93;'s account was deleted" shows</td>
+            <td>If the account exists and is deleted a message reading "&#91;username&#93; was deleted" shows.<br>If there is no account with the provided username a message reading "&#91;username&#93; was not found" shows.</td>
           </tr>
         </tbody>
       </table>
