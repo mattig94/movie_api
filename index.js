@@ -20,7 +20,8 @@ app.use(cors());
 const validator = require('express-validator');
 app.use(validator());
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
+//mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
+mongoose.connect('mongodb+srv://admin:69KVSUWOlc70bQJD@cluster0-avxc3.mongodb.net/myFlixDB?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 //static files come from public folder
 app.use(express.static('public'));
