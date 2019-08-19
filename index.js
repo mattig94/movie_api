@@ -12,6 +12,14 @@ const Directors = Models.Directors;
 
 const app = express();
 
+//Cross-Origin Resource Sharing via express
+const cors = require('cors');
+app.use(cors());
+
+//server side validation
+const validator = require('express-validator');
+app.use(validator());
+
 mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true});
 
 //static files come from public folder
@@ -125,6 +133,19 @@ app.get('/users/:username', passport.authenticate('jwt', {session: false}), func
 //POST requests
 //creating a new user
 app.post('/users', function(req, res) {
+  //validation
+  req.checkBody('username', 'Username is required').notEmpty();
+  req.checkBody('username', 'Username contains non alphanumeric characters which are not allowed').isAlphanumeric();
+  req.checkBody('password', 'Password is required').notEmpty();
+  req.checkBody('email', 'Email is required').notEmpty();
+  req.checkBody('email', 'Email does not appear to be valid').isEmail();
+  var errors = req.validationErrors();
+  if(errors) {
+    return res.status(422).json({errors: errors});
+  }
+  //hashing password
+  var hashedPassword = Users.hashPassword(req.body.password);
+  //creating the new user
   Users.findOne({username: req.body.username})
   .then(function(users) {
     if (users) {
@@ -133,7 +154,7 @@ app.post('/users', function(req, res) {
       Users
       .create({
         username: req.body.username,
-        password: req.body.password,
+        password: hashedPassword,
         email: req.body.email,
         birthday: req.body.birthday
       })
@@ -168,12 +189,25 @@ app.post('/users/:username/favorites/:movieID', passport.authenticate('jwt', {se
 //PUT requests
 //update a users info
 app.put('/users/:username', passport.authenticate('jwt', {session: false}), function(req, res) {
+  //validation
+  req.checkBody('username', 'Username is required').notEmpty();
+  req.checkBody('username', 'Username contains non alphanumeric characters which are not allowed').isAlphanumeric();
+  req.checkBody('password', 'Password is required').notEmpty();
+  req.checkBody('email', 'Email is required').notEmpty();
+  req.checkBody('email', 'Email does not appear to be valid').isEmail();
+  var errors = req.validationErrors();
+  if(errors) {
+    return res.status(422).json({errors: errors});
+  }
+  //hashing password
+  var hashedPassword = Users.hashPassword(req.body.password);
+  //updating actual user info
   Users.findOneAndUpdate(
     {username: req.params.username},
     {$set:
       {
         username: req.body.username,
-        password: req.body.password,
+        password: hashedPassword,
         email: req.body.email,
         birthday: req.body.birthday
       }
@@ -228,6 +262,7 @@ app.use(function(err, req, res, next) {
 });
 
 //LISTEN for requests
-app.listen(8080, () =>
-  console.log('myFlix is running on Port 8080')
-);
+var port = process.env.PORT || 3000;
+app.listen(port, "0.0.0.0", function() {
+  console.log('Listening on Port 3000');
+});
