@@ -1,0 +1,375 @@
+{
+	"info": {
+		"_postman_id": "211bcbd5-6bf9-44e5-8c08-5c86ca80a91b",
+		"name": "myFlix API Requests",
+		"description": "Requests for reading movie, director, and genre data. Also includes requests for creating, reading, updating, and deleting user profiles and data.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get a list of all movies",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOlsiNWQ0OWRmYWJkYzM4ZTJkM2JjYzE3OWFkIiwiNWQ0OWUwMjlkYzM4ZTJkM2JjYzE3OWFlIl0sIl9pZCI6IjVkNDlmMmFmZGMzOGUyZDNiY2MxNzljOCIsInVzZXJuYW1lIjoibWdvZGVrIiwicGFzc3dvcmQiOiJ0ZXN0MTIzIiwiZW1haWwiOiJtYXR0aWdvZGVrQGdtYWlsLmNvbSIsImJpcnRoZGF5IjoiMTk5NC0xMi0wMlQwMDowMDowMC4wMDBaIiwiaWF0IjoxNTY1ODk4MDUxLCJleHAiOjE1NjY1MDI4NTEsInN1YiI6Im1nb2RlayJ9.VMv-OzrcgVdO-T7Dqu6Jy3fr1uNITbbd0QbpccXcSGU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				},
+				"description": "Returns a list of all movies and details (title, description, genre, director, image URL, and whether or not it's featured)"
+			},
+			"response": []
+		},
+		{
+			"name": "Get data about a single movie",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOlsiNWQ0OWRmYWJkYzM4ZTJkM2JjYzE3OWFkIiwiNWQ0OWUwMjlkYzM4ZTJkM2JjYzE3OWFlIl0sIl9pZCI6IjVkNDlmMmFmZGMzOGUyZDNiY2MxNzljOCIsInVzZXJuYW1lIjoibWdvZGVrIiwicGFzc3dvcmQiOiJ0ZXN0MTIzIiwiZW1haWwiOiJtYXR0aWdvZGVrQGdtYWlsLmNvbSIsImJpcnRoZGF5IjoiMTk5NC0xMi0wMlQwMDowMDowMC4wMDBaIiwiaWF0IjoxNTY1ODk4MDUxLCJleHAiOjE1NjY1MDI4NTEsInN1YiI6Im1nb2RlayJ9.VMv-OzrcgVdO-T7Dqu6Jy3fr1uNITbbd0QbpccXcSGU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/movies/Clueless",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies",
+						"Clueless"
+					]
+				},
+				"description": "Return data (description, genre, director, image URL, whether it’s featured or no) about a single movie by title"
+			},
+			"response": []
+		},
+		{
+			"name": "Get data about a single genre",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOlsiNWQ0OWRmYWJkYzM4ZTJkM2JjYzE3OWFkIiwiNWQ0OWUwMjlkYzM4ZTJkM2JjYzE3OWFlIl0sIl9pZCI6IjVkNDlmMmFmZGMzOGUyZDNiY2MxNzljOCIsInVzZXJuYW1lIjoibWdvZGVrIiwicGFzc3dvcmQiOiJ0ZXN0MTIzIiwiZW1haWwiOiJtYXR0aWdvZGVrQGdtYWlsLmNvbSIsImJpcnRoZGF5IjoiMTk5NC0xMi0wMlQwMDowMDowMC4wMDBaIiwiaWF0IjoxNTY1ODk4MDUxLCJleHAiOjE1NjY1MDI4NTEsInN1YiI6Im1nb2RlayJ9.VMv-OzrcgVdO-T7Dqu6Jy3fr1uNITbbd0QbpccXcSGU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/genres/action",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"genres",
+						"action"
+					]
+				},
+				"description": "Return data about a genre (name and description) by name"
+			},
+			"response": []
+		},
+		{
+			"name": "Get data about a director",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOlsiNWQ0OWRmYWJkYzM4ZTJkM2JjYzE3OWFkIiwiNWQ0OWUwMjlkYzM4ZTJkM2JjYzE3OWFlIl0sIl9pZCI6IjVkNDlmMmFmZGMzOGUyZDNiY2MxNzljOCIsInVzZXJuYW1lIjoibWdvZGVrIiwicGFzc3dvcmQiOiJ0ZXN0MTIzIiwiZW1haWwiOiJtYXR0aWdvZGVrQGdtYWlsLmNvbSIsImJpcnRoZGF5IjoiMTk5NC0xMi0wMlQwMDowMDowMC4wMDBaIiwiaWF0IjoxNTY1ODk4MDUxLCJleHAiOjE1NjY1MDI4NTEsInN1YiI6Im1nb2RlayJ9.VMv-OzrcgVdO-T7Dqu6Jy3fr1uNITbbd0QbpccXcSGU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/directors/Gary%20Winick",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"directors",
+						"Gary%20Winick"
+					]
+				},
+				"description": "Return data about a director (bio, birth year, death year) by name"
+			},
+			"response": []
+		},
+		{
+			"name": "Create new users ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"sgodek\",\n\t\"password\": \"testing\",\n\t\"email\": \"sgodek@test.com\"\n\t\n}"
+				},
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/users",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "Username must be provided to register"
+			},
+			"response": []
+		},
+		{
+			"name": "Add movie to favorites",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOlsiNWQ0OWRmYWJkYzM4ZTJkM2JjYzE3OWFkIiwiNWQ0OWUwMjlkYzM4ZTJkM2JjYzE3OWFlIl0sIl9pZCI6IjVkNDlmMmFmZGMzOGUyZDNiY2MxNzljOCIsInVzZXJuYW1lIjoibWdvZGVrIiwicGFzc3dvcmQiOiJ0ZXN0MTIzIiwiZW1haWwiOiJtYXR0aWdvZGVrQGdtYWlsLmNvbSIsImJpcnRoZGF5IjoiMTk5NC0xMi0wMlQwMDowMDowMC4wMDBaIiwiaWF0IjoxNTY1ODk4MDUxLCJleHAiOjE1NjY1MDI4NTEsInN1YiI6Im1nb2RlayJ9.VMv-OzrcgVdO-T7Dqu6Jy3fr1uNITbbd0QbpccXcSGU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/users/sgodek/favorites/5d49e099dc38e2d3bcc179af",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"sgodek",
+						"favorites",
+						"5d49e099dc38e2d3bcc179af"
+					]
+				},
+				"description": "Allow user to add a movie to their list of favorites"
+			},
+			"response": []
+		},
+		{
+			"name": "User Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/login?username=sgodek&password=testing",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "sgodek"
+						},
+						{
+							"key": "password",
+							"value": "testing"
+						}
+					]
+				},
+				"description": "user login to obtain JWT to access all other requests"
+			},
+			"response": []
+		},
+		{
+			"name": "Update user data",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOlsiNWQ0OWUwOTlkYzM4ZTJkM2JjYzE3OWFmIl0sIl9pZCI6IjVkNWFlNmI1MDdkZWUyMDAxNzVmN2M0OCIsInVzZXJuYW1lIjoic2dvZGVrIiwicGFzc3dvcmQiOiIkMmIkMTAkcVVwZDRqa2M5SHkxaUxZaHlscmhqT054ejN3RUJleEtLVXZPa1dJNU05Vk44bWQvTnpnTC4iLCJlbWFpbCI6InNnb2Rla0B0ZXN0LmNvbSIsIl9fdiI6MCwiaWF0IjoxNTY2MjM4NzAzLCJleHAiOjE1NjY4NDM1MDMsInN1YiI6InNnb2RlayJ9.9VZWZBgMHms7krRyjhiTJCKxcbndK05TQexDuZiO-4Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"sgodek\",\n\t\"password\": \"testing\",\n\t\"email\": \"sgodek@test.com\",\n\t\"birthday\": \"1997-07-08\",\n\t\"favorites\": []\n}"
+				},
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/users/sgodek",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"sgodek"
+					]
+				},
+				"description": "Allow users to update their user information (usermane, password, email, date of birth)"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete movie from favorites",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOlsiNWQ0OWRmYWJkYzM4ZTJkM2JjYzE3OWFkIiwiNWQ0OWUwMjlkYzM4ZTJkM2JjYzE3OWFlIl0sIl9pZCI6IjVkNDlmMmFmZGMzOGUyZDNiY2MxNzljOCIsInVzZXJuYW1lIjoibWdvZGVrIiwicGFzc3dvcmQiOiJ0ZXN0MTIzIiwiZW1haWwiOiJtYXR0aWdvZGVrQGdtYWlsLmNvbSIsImJpcnRoZGF5IjoiMTk5NC0xMi0wMlQwMDowMDowMC4wMDBaIiwiaWF0IjoxNTY1ODk4MDUxLCJleHAiOjE1NjY1MDI4NTEsInN1YiI6Im1nb2RlayJ9.VMv-OzrcgVdO-T7Dqu6Jy3fr1uNITbbd0QbpccXcSGU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/users/sgodek/favorites/5d49e099dc38e2d3bcc179af",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"sgodek",
+						"favorites",
+						"5d49e099dc38e2d3bcc179af"
+					]
+				},
+				"description": "Allow users to remove a movie fromo their list of favorites"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOlsiNWQ0OWRmYWJkYzM4ZTJkM2JjYzE3OWFkIiwiNWQ0OWUwMjlkYzM4ZTJkM2JjYzE3OWFlIl0sIl9pZCI6IjVkNDlmMmFmZGMzOGUyZDNiY2MxNzljOCIsInVzZXJuYW1lIjoibWdvZGVrIiwicGFzc3dvcmQiOiJ0ZXN0MTIzIiwiZW1haWwiOiJtYXR0aWdvZGVrQGdtYWlsLmNvbSIsImJpcnRoZGF5IjoiMTk5NC0xMi0wMlQwMDowMDowMC4wMDBaIiwiaWF0IjoxNTY1ODk4MDUxLCJleHAiOjE1NjY1MDI4NTEsInN1YiI6Im1nb2RlayJ9.VMv-OzrcgVdO-T7Dqu6Jy3fr1uNITbbd0QbpccXcSGU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/users/sgodek",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"sgodek"
+					]
+				},
+				"description": "Allow existing users to deregister"
+			},
+			"response": []
+		},
+		{
+			"name": "Get list of users",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmYXZvcml0ZXMiOlsiNWQ0OWRmYWJkYzM4ZTJkM2JjYzE3OWFkIiwiNWQ0OWUwMjlkYzM4ZTJkM2JjYzE3OWFlIl0sIl9pZCI6IjVkNDlmMmFmZGMzOGUyZDNiY2MxNzljOCIsInVzZXJuYW1lIjoibWdvZGVrIiwicGFzc3dvcmQiOiJ0ZXN0MTIzIiwiZW1haWwiOiJtYXR0aWdvZGVrQGdtYWlsLmNvbSIsImJpcnRoZGF5IjoiMTk5NC0xMi0wMlQwMDowMDowMC4wMDBaIiwiaWF0IjoxNTY1ODk4MDUxLCJleHAiOjE1NjY1MDI4NTEsInN1YiI6Im1nb2RlayJ9.VMv-OzrcgVdO-T7Dqu6Jy3fr1uNITbbd0QbpccXcSGU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://my-millennial-movies.herokuapp.com/users/",
+					"protocol": "https",
+					"host": [
+						"my-millennial-movies",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						""
+					]
+				},
+				"description": "get a list of all users who are registered"
+			},
+			"response": []
+		}
+	]
+}
