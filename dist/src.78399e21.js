@@ -32467,9 +32467,7 @@ function (_React$Component) {
         className: "value"
       }, movie.director.name)), _react.default.createElement("button", {
         onClick: function onClick() {
-          return location.replace({
-            MainView: _mainView.MainView
-          });
+          return location.replace("/");
         }
       }, "Back"));
     }
@@ -32739,7 +32737,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55956" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50601" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

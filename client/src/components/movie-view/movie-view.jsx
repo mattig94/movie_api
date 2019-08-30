@@ -31,7 +31,7 @@ export class MovieView extends React.Component {
 					<div className="label">Director</div>
 					<div className="value">{movie.director.name}</div>	
 				</div>
-				<button onClick={() => location.replace({MainView})}>Back</button>
+				<button onClick={() => location.replace("/")}>Back</button>
 			</div>
 		);
 	}
