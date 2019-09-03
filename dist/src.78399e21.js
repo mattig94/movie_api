@@ -32392,8 +32392,6 @@ exports.MovieView = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _mainView = require("../main-view/main-view");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -32434,7 +32432,7 @@ function (_React$Component) {
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          onClick = _this$props.onClick;
+          _onClick = _this$props.onClick;
       if (!movie) return null;
       return _react.default.createElement("div", {
         className: "movie-view"
@@ -32467,7 +32465,7 @@ function (_React$Component) {
         className: "value"
       }, movie.director.name)), _react.default.createElement("button", {
         onClick: function onClick() {
-          return location.replace("/");
+          return _onClick();
         }
       }, "Back"));
     }
@@ -32477,7 +32475,7 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.MovieView = MovieView;
-},{"react":"../../node_modules/react/index.js","../main-view/main-view":"components/main-view/main-view.jsx"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js"}],"components/main-view/main-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32547,8 +32545,19 @@ function (_React$Component) {
   }, {
     key: "onMovieClick",
     value: function onMovieClick(movie) {
+      var movies = this.state.movies;
       this.setState({
+        movies: movies,
         selectedMovie: movie
+      });
+    }
+  }, {
+    key: "onBackClick",
+    value: function onBackClick() {
+      var movies = this.state.movies;
+      this.setState({
+        movies: movies,
+        selectedMovie: null
       });
     }
   }, {
@@ -32565,7 +32574,10 @@ function (_React$Component) {
       return _react.default.createElement("div", {
         className: "main-view"
       }, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
-        movie: selectedMovie
+        movie: selectedMovie,
+        onClick: function onClick(movie) {
+          return _this3.onBackClick();
+        }
       }) : movies.map(function (movie) {
         return _react.default.createElement(_movieCard.MovieCard, {
           key: movie._id,

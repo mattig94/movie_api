@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { MainView } from '../main-view/main-view';
-
 export class MovieView extends React.Component {
 	
 	constructor() {
@@ -31,7 +29,7 @@ export class MovieView extends React.Component {
 					<div className="label">Director</div>
 					<div className="value">{movie.director.name}</div>	
 				</div>
-				<button onClick={() => location.replace("/")}>Back</button>
+				<button onClick={() => onClick()}>Back</button>
 			</div>
 		);
 	}
