@@ -23,11 +23,11 @@ export class MovieView extends React.Component {
 				<img className="movie-poster" src={movie.imgURL} />
 				<div className="movie-genre">
 					<div className="label">Genre</div>
-					<div className="value">{movie.genre}</div>	
+					<div className="value">{movie.genre}</div> 	
 				</div>
 				<div className="movie-director">
-					<div className="label">Director</div>
-					<div className="value">{movie.director.name}</div>	
+					<div className="label">Director ID</div>
+					<div className="value">{movie.director}</div>	
 				</div>
 				<button onClick={() => onClick()}>Back</button>
 			</div>
