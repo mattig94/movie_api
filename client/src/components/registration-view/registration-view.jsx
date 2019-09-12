@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import './registration-view.scss';
+
 export function RegistrationView(props) {
 	const [ username, addUsername ] = useState('');
 	const [ password, addPassword ] = useState('');
@@ -34,7 +36,7 @@ export function RegistrationView(props) {
 				<Form.Control type="password" placeholder="Create a Password" value={password} onChange={e => addPassword(e.target.value)} />
 			</Form.Group>
 			<Form.Group>
-				<button type="button" onClick={handleSubmit}>Register</button>
+				<Button type="submit" onClick={handleSubmit}>Register</Button>
 			</Form.Group>
 		</Form>
 	);

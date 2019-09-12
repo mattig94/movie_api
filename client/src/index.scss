@@ -1,5 +1,17 @@
-$color: steelblue;
+$light-color: #f7cac9;
+$medium-color: #9799ba;
+$dark-color: #276db3;
 
-.my-flix{
-	color: $color;
+body {	
+	margin: 15px;
+	background: $light-color;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, $light-color, $medium-color);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, $light-color, $medium-color); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+header {
+	font-size: 3rem;
+	font-family: 'Poppins', sans-serif;
+	color: $dark-color;
+	font-weight: 600;
 }
