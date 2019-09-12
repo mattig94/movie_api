@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 
 import './movie-view.scss';
@@ -37,3 +38,12 @@ export class MovieView extends React.Component {
 		);
 	}
 }
+
+MovieView.propTypes = {
+	movie: PropTypes.shape({
+		title: PropTypes.string.isRequired,
+		description: PropTypes.string.isRequired,
+		imgURL: PropTypes.string.isRequired,
+	}).isRequired,
+	onClick: PropTypes.func.isRequired
+};
