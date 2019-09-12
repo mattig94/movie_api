@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 export function RegistrationView(props) {
 	const [ username, addUsername ] = useState('');
@@ -14,20 +16,26 @@ export function RegistrationView(props) {
 	};
 
 	return (
-		<form>
-			<label>
-				Username: <input type="text" value={username} onChange={e => addUsername(e.target.value)} />
-			</label>
-			<label>
-				Email: <input type="email" value={email} onChange={e => addEmail(e.target.value)} />
-			</label>
-			<label>
-				Birthday: <input type="date" value={birthday} onChange={e => addBirthday(e.target.value)} />
-			</label>
-			<label>
-				Password: <input type="text" value={password} onChange={e => addPassword(e.target.value)} />
-			</label>
-			<button type="button" onClick={handleSubmit}>Register</button>
-		</form>
+		<Form>
+			<Form.Group>
+				<Form.Label>Username:</Form.Label>
+				<Form.Control type="text" placeholder="Create a Username" value={username} onChange={e => addUsername(e.target.value)} />
+			</Form.Group>
+			<Form.Group>
+				<Form.Label>Email:</Form.Label>
+				<Form.Control type="email" placeholder="Enter Email" value={email} onChange={e => addEmail(e.target.value)} />
+			</Form.Group>
+			<Form.Group>
+				<Form.Label>Birthday:</Form.Label>
+				<Form.Control type="date" value={birthday} onChange={e => addBirthday(e.target.value)} />
+			</Form.Group>
+			<Form.Group>
+				<Form.Label>Password:</Form.Label>
+				<Form.Control type="password" placeholder="Create a Password" value={password} onChange={e => addPassword(e.target.value)} />
+			</Form.Group>
+			<Form.Group>
+				<button type="button" onClick={handleSubmit}>Register</button>
+			</Form.Group>
+		</Form>
 	);
 }
