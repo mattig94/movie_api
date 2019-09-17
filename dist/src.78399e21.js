@@ -34592,6 +34592,8 @@ var _Form = _interopRequireDefault(require("react-bootstrap/Form"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 require("./login-view.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -34619,10 +34621,16 @@ function LoginView(props) {
 
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
-    console.log(username, password);
-    /*Send a request for authentication*/
 
-    props.onLoggedIn(username);
+    _axios.default.post('https://my-millennial-movies.herokuapp.com/login', {
+      username: username,
+      password: password
+    }).then(function (response) {
+      var data = response.data;
+      props.onLoggedIn(data);
+    }).catch(function (e) {
+      console.log('no such user');
+    });
   };
 
   var signUp = function signUp(e) {
@@ -34658,7 +34666,7 @@ LoginView.propTypes = {
   onLoggedIn: _propTypes.default.func.isRequired,
   newRegistration: _propTypes.default.func.isRequired
 };
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/Form":"../../node_modules/react-bootstrap/Form.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/Form":"../../node_modules/react-bootstrap/Form.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","axios":"../../node_modules/axios/index.js","./login-view.scss":"components/login-view/login-view.scss"}],"components/registration-view/registration-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -35228,11 +35236,32 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "onLoggedIn",
-    value: function onLoggedIn(user) {
-      this.setState({
-        user: user
+    key: "getMovies",
+    value: function getMovies(token) {
+      var _this3 = this;
+
+      _axios.default.get('https://my-millennial-movies.herokuapp.com/movies', {
+        headers: {
+          Authorization: 'Bearer ${token}'
+        }
+      }).then(function (response) {
+        _this3.setState({
+          movies: response.data
+        });
+      }).catch(function (error) {
+        console.log(error);
       });
+    }
+  }, {
+    key: "onLoggedIn",
+    value: function onLoggedIn(authData) {
+      console.log(authData);
+      this.setState({
+        user: authData.user.username
+      });
+      localStorage.setItem('token', authData.token);
+      localStorage.setItem('user', authData.user.username);
+      this.getMovies(authData.token);
     }
   }, {
     key: "newRegistration",
@@ -35244,7 +35273,7 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this4 = this;
 
       var _this$state = this.state,
           movies = _this$state.movies,
@@ -35253,15 +35282,15 @@ function (_React$Component) {
           registered = _this$state.registered;
       if (!user && registered === null) return _react.default.createElement(_loginView.LoginView, {
         onLoggedIn: function onLoggedIn(user) {
-          return _this3.onLoggedIn(user);
+          return _this4.onLoggedIn(user);
         },
         newRegistration: function newRegistration() {
-          return _this3.newRegistration();
+          return _this4.newRegistration();
         }
       });
       if (!user && registered === false) return _react.default.createElement(_registrationView.RegistrationView, {
         onLoggedIn: function onLoggedIn(user) {
-          return _this3.onLoggedIn(user);
+          return _this4.onLoggedIn(user);
         }
       });
       if (!movies) return _react.default.createElement("div", {
@@ -35272,7 +35301,7 @@ function (_React$Component) {
       }, _react.default.createElement(_Container.default, null, _react.default.createElement(_Row.default, null, selectedMovie ? _react.default.createElement(_movieView.MovieView, {
         movie: selectedMovie,
         onClick: function onClick() {
-          return _this3.onBackButtonClick();
+          return _this4.onBackButtonClick();
         }
       }) : movies.map(function (movie) {
         return _react.default.createElement(_Col.default, {
@@ -35285,7 +35314,7 @@ function (_React$Component) {
           key: movie._id,
           movie: movie,
           onClick: function onClick(movie) {
-            return _this3.onMovieClick(movie);
+            return _this4.onMovieClick(movie);
           }
         }));
       }))));
@@ -35384,7 +35413,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51453" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63124" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
