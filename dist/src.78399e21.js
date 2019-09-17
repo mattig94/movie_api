@@ -35242,7 +35242,7 @@ function (_React$Component) {
 
       _axios.default.get('https://my-millennial-movies.herokuapp.com/movies', {
         headers: {
-          Authorization: 'Bearer ${token}'
+          Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
         _this3.setState({
