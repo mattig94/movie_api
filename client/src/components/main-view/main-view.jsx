@@ -4,6 +4,7 @@ import axios from 'axios';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 
 import { LoginView } from '../login-view/login-view';
 import {RegistrationView } from '../registration-view/registration-view'
@@ -24,15 +25,13 @@ export class MainView extends React.Component {
 	}
 
 	componentDidMount() {
-		axios.get('https://my-millennial-movies.herokuapp.com/movies')
-		.then(response => {
+		let accessToken = localStorage.getItem('token');
+		if (accessToken !== null) {
 			this.setState({
-				movies: response.data
+				user: localStorage.getItem('user')
 			});
-		})
-		.catch(function(error) {
-			console.log(error);
-		});
+			this.getMovies(accessToken);
+		}
 	}
 
 	onMovieClick(movie) {
@@ -81,17 +80,37 @@ export class MainView extends React.Component {
 		});
 	}
 
+	registered(registered) {
+		this.setState({
+			registered: null
+		});
+	}
+
+	logout() {
+		localStorage.removeItem('token');
+		localStorage.removeItem('user');
+		window.location.reload();
+	}
+
 	render() {
 		const { movies, selectedMovie, user, registered } = this.state;
 
 		if (!user && registered === null) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} newRegistration={() => this.newRegistration()}/>;
 
-		if (!user && registered === false) return <RegistrationView onLoggedIn={user => this.onLoggedIn(user)}/>;
+		if (!user && registered === false) return <RegistrationView onLoggedIn={user => this.onLoggedIn(user)} registered={() => this.registered()}/>;
 
 		if (!movies) return <div className="main-view"/>;
 		return (
 			<div className="main-view">
 				<Container>
+					<Row>
+						<Col>
+							<header>millenial movies</header>
+						</Col>
+						<Col sm={3} lg={2}>
+							<Button size="sm" variant="light" onClick={() => this.logout()}>Log Out</Button>
+						</Col>
+					</Row>
 					<Row>
 							{
 								selectedMovie

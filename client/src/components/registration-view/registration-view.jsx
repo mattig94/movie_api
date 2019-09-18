@@ -18,6 +18,11 @@ export function RegistrationView(props) {
 		props.onLoggedIn(username);
 	};
 
+	const logIn = (e) => {
+		e.preventDefault();
+		props.registered();
+	};
+
 	return (
 		<Form>
 			<Form.Group>
@@ -39,6 +44,9 @@ export function RegistrationView(props) {
 			<Form.Group>
 				<Button type="submit" onClick={handleSubmit}>Register</Button>
 			</Form.Group>
+			<div>
+				<Button variant="secondary" onClick={logIn}>Already Registered?</Button>
+			</div>
 		</Form>
 	);
 }
