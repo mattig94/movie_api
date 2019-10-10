@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 
 import './login-view.scss';
 
@@ -25,11 +26,6 @@ export function LoginView(props) {
 		});
 	};
 
-	const signUp = (e) => {
-		e.preventDefault();
-		props.newRegistration();
-	};
-
 	return (
 		<Form>
 				<Form.Group>
@@ -44,7 +40,9 @@ export function LoginView(props) {
 					<Button variant="primary" type="submit" onClick={handleSubmit}>Submit</Button>
 				</Form.Group>
 				<div>
-					<Button variant="secondary" onClick={signUp}>Not Registered?</Button>
+					<Link to={`/register`}>
+						<Button variant="secondary">Not Registered?</Button>
+					</Link>
 				</div>
 		</Form>
 
@@ -54,5 +52,4 @@ export function LoginView(props) {
 
 LoginView.propTypes = {
 	onLoggedIn: PropTypes.func.isRequired,
-	newRegistration: PropTypes.func.isRequired
 };

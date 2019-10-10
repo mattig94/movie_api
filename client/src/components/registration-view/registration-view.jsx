@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
+import { Link } from "react-router-dom";
 
 import './registration-view.scss';
 
@@ -13,14 +15,20 @@ export function RegistrationView(props) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(username, email, birthday, password);
-		/*Send a request for authentication*/
-		props.onLoggedIn(username);
-	};
-
-	const logIn = (e) => {
-		e.preventDefault();
-		props.registered();
+		axios.post('https://my-millennial-movies.herokuapp.com/users', {
+			username: username,
+			email: email,
+			birthday: birthday,
+			password: password
+		})
+		.then(response => {
+			const data = response.data;
+			console.log(data);
+			window.open('/', '_self');
+		})
+		.catch(e => {
+			console.log('error registering the user')
+		});
 	};
 
 	return (
@@ -45,7 +53,9 @@ export function RegistrationView(props) {
 				<Button type="submit" onClick={handleSubmit}>Register</Button>
 			</Form.Group>
 			<div>
-				<Button variant="secondary" onClick={logIn}>Already Registered?</Button>
+				<Link to={`/`}>
+					<Button variant="secondary">Already Registered?</Button>
+				</Link>
 			</div>
 		</Form>
 	);

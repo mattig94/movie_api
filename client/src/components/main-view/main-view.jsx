@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import { BrowserRouter as Router, Route} from "react-router-dom";
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -17,10 +19,8 @@ export class MainView extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			movies: null,
-			selectedMovie: null,
-			user: null,
-			registered: null
+			movies: [],
+			user: null
 		};
 	}
 
@@ -38,7 +38,6 @@ export class MainView extends React.Component {
 		let movies = this.state.movies;
 		this.setState({
 			movies: movies,
-			selectedMovie: movie
 		});
 	}
 
@@ -46,7 +45,6 @@ export class MainView extends React.Component {
 		let movies = this.state.movies;
 		this.setState({
 			movies: movies,
-			selectedMovie: null
 		})
 	}
 
@@ -74,18 +72,6 @@ export class MainView extends React.Component {
 		this.getMovies(authData.token);
 	}
 
-	newRegistration(registered) {
-		this.setState({
-			registered: false
-		});
-	}
-
-	registered(registered) {
-		this.setState({
-			registered: null
-		});
-	}
-
 	logout() {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
@@ -93,37 +79,39 @@ export class MainView extends React.Component {
 	}
 
 	render() {
-		const { movies, selectedMovie, user, registered } = this.state;
-
-		if (!user && registered === null) return <LoginView onLoggedIn={user => this.onLoggedIn(user)} newRegistration={() => this.newRegistration()}/>;
-
-		if (!user && registered === false) return <RegistrationView onLoggedIn={user => this.onLoggedIn(user)} registered={() => this.registered()}/>;
+		const { movies, user } = this.state;
 
 		if (!movies) return <div className="main-view"/>;
 		return (
-			<div className="main-view">
-				<Container>
-					<Row>
-						<Col>
-							<header>millenial movies</header>
-						</Col>
-						<Col sm={3} lg={2}>
-							<Button size="sm" variant="light" onClick={() => this.logout()}>Log Out</Button>
-						</Col>
-					</Row>
-					<Row>
-							{
-								selectedMovie
-								? <MovieView movie={selectedMovie} onClick={() => this.onBackButtonClick()}/>
-								: movies.map(movie => (
-								<Col key={movie._id} xl={3} lg={4} md={6} sm={12}>
-								<MovieCard key={movie._id} movie={movie} onClick={movie => this.onMovieClick(movie)}/>
-								</Col>
-								))
-							}
-					</Row>
-				</Container>
-			</div>
+			<Router>
+				<div className="main-view">
+					<Container>
+						<Row>
+							<Col>
+								<header>millenial movies</header>
+							</Col>
+							<Col sm={3} lg={2}>
+								<Button size="sm" variant="light" onClick={() => this.logout()}>Log Out</Button>
+							</Col>
+						</Row>
+						<Row>						
+							<Route exact path="/" render={() => 
+								{
+									if (!user) return <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>;
+									return movies.map(m => <Col key={m._id} xl={3} lg={4} md={6} sm={12}><MovieCard key={m._id} movie={m}/></Col>)
+								}
+							}/>
+
+							<Route path="/register" render={() => <RegistrationView onLoggedIn={user => this.onLoggedIn(user)}/>}/>
+
+							<Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
+
+							<Route path="/director/:name"/>
+							<Route path="/genre/:name"/>
+						</Row>
+					</Container>
+				</div>
+			</Router>
 		);
 	}
 }
