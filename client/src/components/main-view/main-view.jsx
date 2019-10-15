@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import { BrowserRouter as Router, Route} from "react-router-dom";
+import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -12,6 +12,8 @@ import { LoginView } from '../login-view/login-view';
 import {RegistrationView } from '../registration-view/registration-view'
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
+import { DirectorView } from '../director-view/director-view';
+import { GenreView } from '../genre-view/genre-view';
 
 import './main-view.scss';
 
@@ -102,12 +104,16 @@ export class MainView extends React.Component {
 								}
 							}/>
 
+							<Route path="/movies">
+								<Redirect to="/" />
+							</Route>
+
 							<Route path="/register" render={() => <RegistrationView onLoggedIn={user => this.onLoggedIn(user)}/>}/>
 
 							<Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
 
-							<Route path="/director/:name"/>
-							<Route path="/genre/:name"/>
+							<Route path="/director/:name" render={({match}) => <DirectorView director={directors.find(d => d.name === match.params.name)}/>}/>
+							<Route path="/genre/:name" render={({match}) => <GenreView genre={genres.find(g => g.name === match.params.name)}/>}/>
 						</Row>
 					</Container>
 				</div>

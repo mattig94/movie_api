@@ -55,7 +55,36 @@ app.get('/', function(req, res) {
 });
 //movie by title
 app.get('/movies/:title', passport.authenticate('jwt', {session: false}), function(req, res) {
-  Movies.findOne({title: req.params.title})
+  db.Movies.aggregate([
+    {
+        $lookup: {
+            from: 'Genres',
+            localField: 'genres',
+            foreignField: '_id',
+            as: 'genres'
+        }
+    },
+    {
+        $lookup: {
+            from: "Directors", 
+            localField: "director", 
+            foreignField: "_id",
+            as: "director"
+        }
+    },
+    {   
+        $unwind:"$director" 
+    },
+    {   
+        $project: {
+            _id : 1,
+            title : 1,
+            description : 1,
+            director : "$director.name",
+            genres : "$genres.name",
+        } 
+    }
+])
   .then(function(movie) {
     res.json(movie)
   })
@@ -75,9 +104,20 @@ app.get('/movies/:title', passport.authenticate('jwt', {session: false}), functi
 //     res.status(500).send("Error: " + error);
 //   });
 // });
-//genre details
+//genre details by name
 app.get('/genres/:name', passport.authenticate('jwt', {session: false}), function(req, res) {
   Genres.findOne({name: req.params.name})
+  .then(function(genre) {
+    res.json(genre)
+  })
+  .catch(function(error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
+});
+//genre details by id
+app.get('/genres/:genreID', passport.authenticate('jwt', {session: false}), function(req, res) {
+  Genres.findOne({_id: req.params.genreID})
   .then(function(genre) {
     res.json(genre)
   })
@@ -98,16 +138,16 @@ app.get('/directors/:name', passport.authenticate('jwt', {session: false}), func
   });
 });
 //director details by id
-// app.get('/directors/:directorID', function(req, res) {
-//   Directors.findOne({_id: req.params.directorID})
-//   .then(function(director) {
-//     res.json(director)
-//   })
-//   .catch(function(error) {
-//     console.error(error);
-//     res.status(500).send("Error: " + error);
-//   });
-// });
+app.get('/directors/:directorID', function(req, res) {
+  Directors.findOne({_id: req.params.directorID})
+  .then(function(director) {
+    res.json(director)
+  })
+  .catch(function(error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
+});
 //list of all users
 app.get('/users', passport.authenticate('jwt', {session: false}), function(req, res) {
   Users.find()
