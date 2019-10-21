@@ -105,16 +105,16 @@ app.get('/movies/:title', passport.authenticate('jwt', {session: false}), functi
 //   });
 // });
 //genre details by name
-app.get('/genres/:name', passport.authenticate('jwt', {session: false}), function(req, res) {
-  Genres.findOne({name: req.params.name})
-  .then(function(genre) {
-    res.json(genre)
-  })
-  .catch(function(error) {
-    console.error(error);
-    res.status(500).send("Error: " + error);
-  });
-});
+// app.get('/genres/:name', passport.authenticate('jwt', {session: false}), function(req, res) {
+//   Genres.findOne({name: req.params.name})
+//   .then(function(genre) {
+//     res.json(genre)
+//   })
+//   .catch(function(error) {
+//     console.error(error);
+//     res.status(500).send("Error: " + error);
+//   });
+// });
 //genre details by id
 app.get('/genres/:genreID', passport.authenticate('jwt', {session: false}), function(req, res) {
   Genres.findOne({_id: req.params.genreID})
@@ -127,16 +127,16 @@ app.get('/genres/:genreID', passport.authenticate('jwt', {session: false}), func
   });
 });
 //director details by name
-app.get('/directors/:name', passport.authenticate('jwt', {session: false}), function(req, res) {
-  Directors.findOne({name: req.params.name})
-  .then(function(director) {
-    res.json(director)
-  })
-  .catch(function(error) {
-    console.error(error);
-    res.status(500).send("Error: " + error);
-  });
-});
+// app.get('/directors/:name', passport.authenticate('jwt', {session: false}), function(req, res) {
+//   Directors.findOne({name: req.params.name})
+//   .then(function(director) {
+//     res.json(director)
+//   })
+//   .catch(function(error) {
+//     console.error(error);
+//     res.status(500).send("Error: " + error);
+//   });
+// });
 //director details by id
 app.get('/directors/:directorID', function(req, res) {
   Directors.findOne({_id: req.params.directorID})

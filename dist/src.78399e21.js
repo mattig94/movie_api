@@ -38128,8 +38128,6 @@ var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _reactRouterDom = require("react-router-dom");
 
-require("./director-view.scss");
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -38150,6 +38148,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+/*import './director-view.scss';*/
 var DirectorView =
 /*#__PURE__*/
 function (_React$Component) {
@@ -38206,7 +38205,7 @@ DirectorView.propTypes = {
     deathYear: _propTypes.default.string
   }).isRequired
 };
-},{}],"components/genre-view/genre-view.jsx":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/genre-view/genre-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38221,8 +38220,6 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
 var _reactRouterDom = require("react-router-dom");
-
-require("./genre-view.scss");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -38244,6 +38241,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
+/*import './genre-view.scss';*/
 var GenreView =
 /*#__PURE__*/
 function (_React$Component) {
@@ -38286,7 +38284,7 @@ GenreView.propTypes = {
     description: _propTypes.default.string
   }).isRequired
 };
-},{}],"components/main-view/main-view.scss":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"components/main-view/main-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -38411,6 +38409,40 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "getDirectors",
+    value: function getDirectors(token) {
+      var _this3 = this;
+
+      _axios.default.get('https://my-millennial-movies.herokuapp.com/directors/:directorID', {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        _this3.setState({
+          directors: response.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "getGenres",
+    value: function getGenres(token) {
+      var _this4 = this;
+
+      _axios.default.get('https://my-millennial-movies.herokuapp.com/genres/:genreID', {
+        headers: {
+          Authorization: "Bearer ".concat(token)
+        }
+      }).then(function (response) {
+        _this4.setState({
+          genres: response.data
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
     key: "onLoggedIn",
     value: function onLoggedIn(authData) {
       console.log(authData);
@@ -38420,6 +38452,8 @@ function (_React$Component) {
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.username);
       this.getMovies(authData.token);
+      this.getDirectors(authData.token);
+      this.getGenres(authData.token);
     }
   }, {
     key: "logout",
@@ -38431,11 +38465,13 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this5 = this;
 
       var _this$state = this.state,
           movies = _this$state.movies,
-          user = _this$state.user;
+          user = _this$state.user,
+          directors = _this$state.directors,
+          genres = _this$state.genres;
       if (!movies) return _react.default.createElement("div", {
         className: "main-view"
       });
@@ -38448,7 +38484,7 @@ function (_React$Component) {
         size: "sm",
         variant: "light",
         onClick: function onClick() {
-          return _this3.logout();
+          return _this5.logout();
         }
       }, "Log Out"))), _react.default.createElement(_Row.default, null, _react.default.createElement(_reactRouterDom.Route, {
         exact: true,
@@ -38456,7 +38492,7 @@ function (_React$Component) {
         render: function render() {
           if (!user) return _react.default.createElement(_loginView.LoginView, {
             onLoggedIn: function onLoggedIn(user) {
-              return _this3.onLoggedIn(user);
+              return _this5.onLoggedIn(user);
             }
           });
           return movies.map(function (m) {
@@ -38481,7 +38517,7 @@ function (_React$Component) {
         render: function render() {
           return _react.default.createElement(_registrationView.RegistrationView, {
             onLoggedIn: function onLoggedIn(user) {
-              return _this3.onLoggedIn(user);
+              return _this5.onLoggedIn(user);
             }
           });
         }
@@ -38496,22 +38532,22 @@ function (_React$Component) {
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/director/:name",
+        path: "/directors/:directorID",
         render: function render(_ref2) {
           var match = _ref2.match;
           return _react.default.createElement(_directorView.DirectorView, {
-            director: director.find(function (d) {
-              return d.name === match.params.name;
+            director: directors.find(function (d) {
+              return d._id === match.params.directorID;
             })
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/genre/:name",
+        path: "/genres/:genreID",
         render: function render(_ref3) {
           var match = _ref3.match;
           return _react.default.createElement(_genreView.GenreView, {
-            genre: genre.find(function (g) {
-              return g.name === match.params.name;
+            genre: genres.find(function (g) {
+              return g._id === match.params.genreID;
             })
           });
         }
@@ -38611,7 +38647,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54559" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50329" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

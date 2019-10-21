@@ -64,6 +64,34 @@ export class MainView extends React.Component {
 		});
 	}
 
+	getDirectors(token) {
+		axios.get('https://my-millennial-movies.herokuapp.com/directors/:directorID', {
+			headers: { Authorization: `Bearer ${token}` }
+		})
+		.then(response => {
+			this.setState({
+				directors: response.data
+			});
+		})
+		.catch(function(error) {
+			console.log(error);
+		});
+	}
+
+	getGenres(token) {
+		axios.get('https://my-millennial-movies.herokuapp.com/genres/:genreID', {
+			headers: { Authorization: `Bearer ${token}` }
+		})
+		.then(response => {
+			this.setState({
+				genres: response.data
+			});
+		})
+		.catch(function(error) {
+			console.log(error);
+		});
+	}
+
 	onLoggedIn(authData) {
 		console.log(authData);
 		this.setState({
@@ -72,6 +100,8 @@ export class MainView extends React.Component {
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.username);
 		this.getMovies(authData.token);
+		this.getDirectors(authData.token);
+		this.getGenres(authData.token);
 	}
 
 	logout() {
@@ -81,7 +111,7 @@ export class MainView extends React.Component {
 	}
 
 	render() {
-		const { movies, user } = this.state;
+		const { movies, user, directors, genres } = this.state;
 
 		if (!movies) return <div className="main-view"/>;
 		return (
@@ -112,8 +142,8 @@ export class MainView extends React.Component {
 
 							<Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
 
-							<Route path="/director/:name" render={({match}) => <DirectorView director={directors.find(d => d.name === match.params.name)}/>}/>
-							<Route path="/genre/:name" render={({match}) => <GenreView genre={genres.find(g => g.name === match.params.name)}/>}/>
+							<Route path="/directors/:directorID" render={({match}) => <DirectorView director={directors.find(d => d._id === match.params.directorID)}/>}/>
+							<Route path="/genres/:genreID" render={({match}) => <GenreView genre={genres.find(g => g._id === match.params.genreID)}/>}/>
 						</Row>
 					</Container>
 				</div>
