@@ -3,7 +3,7 @@ const express = require('express'),
   bodyParser = require('body-parser');
   mongoose = require('mongoose');
 
-const Models = require('./models.js');
+const Models = require('./server/models.js');
 
 const Movies = Models.Movies;
 const Users = Models.Users;
@@ -29,10 +29,10 @@ app.use(express.static('public'));
 //POST and PUT request body info is sent back as json
 app.use(bodyParser.json());
 //login POST
-var auth = require('./auth')(app);
+var auth = require('./server/auth')(app);
 //PASSPORT
 const passport = require('passport');
-require('./passport');
+require('./server/passport');
 
 //LOG request data
 app.use(morgan('common'));
