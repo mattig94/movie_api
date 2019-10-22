@@ -55,6 +55,7 @@ app.get('/', function(req, res) {
 });
 //movie by title
 app.get('/movies/:title', passport.authenticate('jwt', {session: false}), function(req, res) {
+  Movies.findOne({title: req.params.title})
   db.Movies.aggregate([
     {
         $lookup: {

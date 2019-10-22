@@ -38450,10 +38450,9 @@ function (_React$Component) {
         user: authData.user.username
       });
       localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', authData.user.username);
-      this.getMovies(authData.token);
-      this.getDirectors(authData.token);
-      this.getGenres(authData.token);
+      localStorage.setItem('user', authData.user.username); //this.getMovies(authData.token);
+
+      this.getDirectors(authData.token); // this.getGenres(authData.token);
     }
   }, {
     key: "logout",
@@ -38647,7 +38646,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50329" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56875" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

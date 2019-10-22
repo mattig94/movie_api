@@ -99,9 +99,9 @@ export class MainView extends React.Component {
 		});
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.username);
-		this.getMovies(authData.token);
+		//this.getMovies(authData.token);
 		this.getDirectors(authData.token);
-		this.getGenres(authData.token);
+		// this.getGenres(authData.token);
 	}
 
 	logout() {
