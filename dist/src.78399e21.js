@@ -38358,6 +38358,8 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MainView).call(this));
     _this.state = {
       movies: [],
+      directors: [],
+      genres: [],
       user: null
     };
     return _this;
@@ -38532,22 +38534,22 @@ function (_React$Component) {
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/directors/:directorID",
+        path: "/directors/:directorId",
         render: function render(_ref2) {
           var match = _ref2.match;
           return _react.default.createElement(_directorView.DirectorView, {
             director: directors.find(function (d) {
-              return d._id === match.params.directorID;
+              return d._id === match.params.directorId;
             })
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/genres/:genreID",
+        path: "/genres/:genreId",
         render: function render(_ref3) {
           var match = _ref3.match;
           return _react.default.createElement(_genreView.GenreView, {
             genre: genres.find(function (g) {
-              return g._id === match.params.genreID;
+              return g._id === match.params.genreId;
             })
           });
         }
