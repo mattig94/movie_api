@@ -65,7 +65,7 @@ export class MainView extends React.Component {
 	}
 
 	getDirectors(token) {
-		axios.get('https://my-millennial-movies.herokuapp.com/directors/:directorID', {
+		axios.get('https://my-millennial-movies.herokuapp.com/directors', {
 			headers: { Authorization: `Bearer ${token}` }
 		})
 		.then(response => {
@@ -79,7 +79,7 @@ export class MainView extends React.Component {
 	}
 
 	getGenres(token) {
-		axios.get('https://my-millennial-movies.herokuapp.com/genres/:genreID', {
+		axios.get('https://my-millennial-movies.herokuapp.com/genres', {
 			headers: { Authorization: `Bearer ${token}` }
 		})
 		.then(response => {
@@ -99,9 +99,9 @@ export class MainView extends React.Component {
 		});
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.username);
-		//this.getMovies(authData.token);
+		this.getMovies(authData.token);
 		this.getDirectors(authData.token);
-		// this.getGenres(authData.token);
+		this.getGenres(authData.token);
 	}
 
 	logout() {

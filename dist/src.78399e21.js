@@ -38413,7 +38413,7 @@ function (_React$Component) {
     value: function getDirectors(token) {
       var _this3 = this;
 
-      _axios.default.get('https://my-millennial-movies.herokuapp.com/directors/:directorID', {
+      _axios.default.get('https://my-millennial-movies.herokuapp.com/directors', {
         headers: {
           Authorization: "Bearer ".concat(token)
         }
@@ -38430,7 +38430,7 @@ function (_React$Component) {
     value: function getGenres(token) {
       var _this4 = this;
 
-      _axios.default.get('https://my-millennial-movies.herokuapp.com/genres/:genreID', {
+      _axios.default.get('https://my-millennial-movies.herokuapp.com/genres', {
         headers: {
           Authorization: "Bearer ".concat(token)
         }
@@ -38450,9 +38450,10 @@ function (_React$Component) {
         user: authData.user.username
       });
       localStorage.setItem('token', authData.token);
-      localStorage.setItem('user', authData.user.username); //this.getMovies(authData.token);
-
-      this.getDirectors(authData.token); // this.getGenres(authData.token);
+      localStorage.setItem('user', authData.user.username);
+      this.getMovies(authData.token);
+      this.getDirectors(authData.token);
+      this.getGenres(authData.token);
     }
   }, {
     key: "logout",

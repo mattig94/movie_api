@@ -56,36 +56,36 @@ app.get('/', function(req, res) {
 //movie by title
 app.get('/movies/:title', passport.authenticate('jwt', {session: false}), function(req, res) {
   Movies.findOne({title: req.params.title})
-  db.Movies.aggregate([
-    {
-        $lookup: {
-            from: 'Genres',
-            localField: 'genres',
-            foreignField: '_id',
-            as: 'genres'
-        }
-    },
-    {
-        $lookup: {
-            from: "Directors", 
-            localField: "director", 
-            foreignField: "_id",
-            as: "director"
-        }
-    },
-    {   
-        $unwind:"$director" 
-    },
-    {   
-        $project: {
-            _id : 1,
-            title : 1,
-            description : 1,
-            director : "$director.name",
-            genres : "$genres.name",
-        } 
-    }
-])
+//   db.Movies.aggregate([
+//     {
+//         $lookup: {
+//             from: 'Genres',
+//             localField: 'genres',
+//             foreignField: '_id',
+//             as: 'genres'
+//         }
+//     },
+//     {
+//         $lookup: {
+//             from: "Directors", 
+//             localField: "director", 
+//             foreignField: "_id",
+//             as: "director"
+//         }
+//     },
+//     {   
+//         $unwind:"$director" 
+//     },
+//     {   
+//         $project: {
+//             _id : 1,
+//             title : 1,
+//             description : 1,
+//             director : "$director.name",
+//             genres : "$genres.name",
+//         } 
+//     }
+// ])
   .then(function(movie) {
     res.json(movie)
   })
