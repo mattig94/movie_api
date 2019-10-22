@@ -49,6 +49,28 @@ app.get('/movies', passport.authenticate('jwt', {session: false}), function(req,
     res.status(500).send("Error: " + error);
   });
 });
+//all directors
+app.get('/directors', passport.authenticate('jwt', {session: false}), function(req, res) {
+  Directors.find()
+  .then(function(directors) {
+    res.status(201).json(directors);
+  })
+  .catch(function(error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
+});
+//all genres
+app.get('/genres', passport.authenticate('jwt', {session: false}), function(req, res) {
+  Genres.find()
+  .then(function(genres) {
+    res.status(201).json(genres);
+  })
+  .catch(function(error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
+});
 //home page
 app.get('/', function(req, res) {
   res.send('Welcome to myFlix!')
