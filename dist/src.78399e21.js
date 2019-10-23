@@ -38018,6 +38018,8 @@ var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 var _reactRouterDom = require("react-router-dom");
 
 require("./movie-view.scss");
@@ -38054,16 +38056,50 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MovieView).call(this));
     _this.state = {};
+    _this.directorInitialized = false;
     return _this;
   }
 
   _createClass(MovieView, [{
+    key: "getDirector",
+    value: function getDirector() {
+      var _this2 = this;
+
+      var movie = this.props.movie;
+      if (!movie) return;
+      var accessToken = localStorage.getItem('token');
+
+      if (accessToken !== null) {
+        this.setState({
+          user: localStorage.getItem('user')
+        });
+
+        _axios.default.get("https://my-millennial-movies.herokuapp.com/directors/".concat(movie.director), {
+          headers: {
+            Authorization: "Bearer ".concat(accessToken)
+          }
+        }).then(function (response) {
+          _this2.setState({
+            directorObject: response.data
+          });
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          movie = _this$props.movie,
-          onClick = _this$props.onClick;
+      var movie = this.props.movie;
+      var directorObject = this.state.directorObject;
       if (!movie) return null;
+
+      if (!this.directorInitialized) {
+        this.getDirector();
+        this.directorInitialized = true;
+      }
+
+      ;
       return _react.default.createElement("div", {
         className: "movie-view"
       }, _react.default.createElement("div", {
@@ -38087,13 +38123,15 @@ function (_React$Component) {
         className: "label"
       }, "Genre"), _react.default.createElement("div", {
         className: "value"
-      }, movie.genre)), _react.default.createElement("div", {
+      }, _react.default.createElement("ul", null, movie.genres.map(function (g) {
+        return _react.default.createElement("li", null, movie.genres);
+      })))), _react.default.createElement("div", {
         className: "movie-director"
       }, _react.default.createElement("div", {
         className: "label"
-      }, "Director ID"), _react.default.createElement("div", {
+      }, "Director"), _react.default.createElement("div", {
         className: "value"
-      }, movie.director)), _react.default.createElement(_reactRouterDom.Link, {
+      }, directorObject && directorObject.name)), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "info"
@@ -38112,7 +38150,7 @@ MovieView.propTypes = {
     imgURL: _propTypes.default.string.isRequired
   }).isRequired
 };
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","axios":"../../node_modules/axios/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
