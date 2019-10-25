@@ -37599,6 +37599,7 @@ function LoginView(props) {
       props.onLoggedIn(data);
     }).catch(function (e) {
       console.log('no such user');
+      alert('no such user');
     });
   };
 
@@ -38055,51 +38056,42 @@ function (_React$Component) {
     _classCallCheck(this, MovieView);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MovieView).call(this));
-    _this.state = {};
-    _this.directorInitialized = false;
+    _this.state = {}; // this.directorInitialized = false;
+
     return _this;
-  }
+  } // getDirector() {
+  //   const { movie } = this.props;
+  //   if(!movie) return;
+  //   let accessToken = localStorage.getItem('token');
+  //   if (accessToken !== null) {
+  //     this.setState({
+  //       user: localStorage.getItem('user')
+  //     });
+  //     axios.get(`https://my-millennial-movies.herokuapp.com/directors/${movie.director}`, {
+  //       headers: { Authorization: `Bearer ${accessToken}` }
+  //     })
+  //     .then(response => {
+  //       this.setState({
+  //         directorObject: response.data
+  //       });
+  //     })
+  //     .catch(function(error) {
+  //       console.log(error);
+  //     });
+  //   }
+  // }
+
 
   _createClass(MovieView, [{
-    key: "getDirector",
-    value: function getDirector() {
-      var _this2 = this;
-
-      var movie = this.props.movie;
-      if (!movie) return;
-      var accessToken = localStorage.getItem('token');
-
-      if (accessToken !== null) {
-        this.setState({
-          user: localStorage.getItem('user')
-        });
-
-        _axios.default.get("https://my-millennial-movies.herokuapp.com/directors/".concat(movie.director), {
-          headers: {
-            Authorization: "Bearer ".concat(accessToken)
-          }
-        }).then(function (response) {
-          _this2.setState({
-            directorObject: response.data
-          });
-        }).catch(function (error) {
-          console.log(error);
-        });
-      }
-    }
-  }, {
     key: "render",
     value: function render() {
-      var movie = this.props.movie;
-      var directorObject = this.state.directorObject;
-      if (!movie) return null;
+      var movie = this.props.movie; //   const { directorObject } = this.state;
+      // if(!movie) return null;
+      //   if(!this.directorInitialized) {
+      //     this.getDirector();
+      //     this.directorInitialized = true;
+      //   };
 
-      if (!this.directorInitialized) {
-        this.getDirector();
-        this.directorInitialized = true;
-      }
-
-      ;
       return _react.default.createElement("div", {
         className: "movie-view"
       }, _react.default.createElement("div", {
@@ -38124,14 +38116,18 @@ function (_React$Component) {
       }, "Genre"), _react.default.createElement("div", {
         className: "value"
       }, _react.default.createElement("ul", null, movie.genres.map(function (g) {
-        return _react.default.createElement("li", null, movie.genres);
+        return _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
+          to: "/genres/".concat(movie.genres)
+        }, movie.genres));
       })))), _react.default.createElement("div", {
         className: "movie-director"
       }, _react.default.createElement("div", {
         className: "label"
       }, "Director"), _react.default.createElement("div", {
         className: "value"
-      }, directorObject && directorObject.name)), _react.default.createElement(_reactRouterDom.Link, {
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/directors/".concat(movie.director)
+      }, movie.director))), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "info"
@@ -38687,7 +38683,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56875" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58966" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

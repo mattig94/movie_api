@@ -12,39 +12,39 @@ export class MovieView extends React.Component {
 	constructor() {
 		super();
 		this.state = {};
-    this.directorInitialized = false;
+    // this.directorInitialized = false;
 	}
 
-  getDirector() {
-    const { movie } = this.props;
-    if(!movie) return;
-    let accessToken = localStorage.getItem('token');
-    if (accessToken !== null) {
-      this.setState({
-        user: localStorage.getItem('user')
-      });
-      axios.get(`https://my-millennial-movies.herokuapp.com/directors/${movie.director}`, {
-        headers: { Authorization: `Bearer ${accessToken}` }
-      })
-      .then(response => {
-        this.setState({
-          directorObject: response.data
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    }
-  }
+  // getDirector() {
+  //   const { movie } = this.props;
+  //   if(!movie) return;
+  //   let accessToken = localStorage.getItem('token');
+  //   if (accessToken !== null) {
+  //     this.setState({
+  //       user: localStorage.getItem('user')
+  //     });
+  //     axios.get(`https://my-millennial-movies.herokuapp.com/directors/${movie.director}`, {
+  //       headers: { Authorization: `Bearer ${accessToken}` }
+  //     })
+  //     .then(response => {
+  //       this.setState({
+  //         directorObject: response.data
+  //       });
+  //     })
+  //     .catch(function(error) {
+  //       console.log(error);
+  //     });
+  //   }
+  // }
 
 	render() {
 		const { movie } = this.props;
-    const { directorObject } = this.state;
-		if(!movie) return null;
-    if(!this.directorInitialized) {
-      this.getDirector();
-      this.directorInitialized = true;
-    };
+  //   const { directorObject } = this.state;
+		// if(!movie) return null;
+  //   if(!this.directorInitialized) {
+  //     this.getDirector();
+  //     this.directorInitialized = true;
+  //   };
 		return (
 			<div className="movie-view">
 				<div className="movie-title">
@@ -58,11 +58,17 @@ export class MovieView extends React.Component {
 				<img className="movie-poster" src={movie.imgURL} />
 				<div className="movie-genre">
 					<div className="label">Genre</div>
-					<div className="value"><ul>{movie.genres.map(g => (<li>{movie.genres}</li>))}</ul></div> 	
+					<div className="value"><ul>{movie.genres.map(g => 
+            <li>
+              <Link to={`/genres/${movie.genres}`}>
+                {movie.genres}
+              </Link>
+            </li>)}</ul></div> 	
 				</div>
 				<div className="movie-director">
 					<div className="label">Director</div>
-					<div className="value">{directorObject && directorObject.name}</div>	
+          {/*<div className="value">{directorObject && directorObject.name}</div>*/}
+          <div className="value"><Link to={`/directors/${movie.director}`}>{movie.director}</Link></div>  
 				</div>
 				<Link to={`/`}>
 					<Button variant="info">Back</Button>
