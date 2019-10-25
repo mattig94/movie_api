@@ -9,18 +9,17 @@ import './movie-card.scss';
 
 export class MovieCard extends React.Component {
 	render() {
-		const { movie, onClick } = this.props;
+		const { movie } = this.props;
 		return(
-			<Card style={{ width: '100%'}}>
-			<Card.Img variant="top" src={movie.imgURL}/>
-			<Card.Body>
-			<Card.Title>{movie.title}</Card.Title>
-			<Card.Text>{movie.description}</Card.Text>
 			<Link to={`/movies/${movie._id}`}>
-				<Button variant="info">Open</Button>
+				<Card style={{ width: '100%'}}>
+				<Card.Img variant="top" src={movie.imgURL}/>
+				<Card.Body>
+				<Card.Title>{movie.title}</Card.Title>
+				<Card.Text>{movie.description}</Card.Text>			
+				</Card.Body>
+				</Card>
 			</Link>
-			</Card.Body>
-			</Card>
 		);
 	}
 }

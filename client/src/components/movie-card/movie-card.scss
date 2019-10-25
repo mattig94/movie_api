@@ -5,3 +5,12 @@ $dark-color: #276db3;
 .card-title {
 	color: $dark-color;
 }
+
+.card-text {
+	text-decoration: none;
+	color: black;
+}
+
+a:hover {
+	text-decoration: none;
+}

@@ -1,7 +1,10 @@
 import React from 'react';
+// import axios from 'axios';
 import PropTypes from 'prop-types';
+
+//use bootstrap card?
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
+
 
 import { Link } from "react-router-dom";
 
@@ -38,7 +41,7 @@ export class MovieView extends React.Component {
   // }
 
 	render() {
-		const { movie } = this.props;
+		const { movie, director, genre } = this.props;
   //   const { directorObject } = this.state;
 		// if(!movie) return null;
   //   if(!this.directorInitialized) {
@@ -60,8 +63,8 @@ export class MovieView extends React.Component {
 					<div className="label">Genre</div>
 					<div className="value"><ul>{movie.genres.map(g => 
             <li>
-              <Link to={`/genres/${movie.genres}`}>
-                {movie.genres}
+              <Link to={`/genres/${g}`}>
+                {g}
               </Link>
             </li>)}</ul></div> 	
 				</div>

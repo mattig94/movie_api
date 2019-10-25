@@ -8,6 +8,15 @@ form {
 .card-title {
   color: #276db3;
 }
+
+.card-text {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  text-decoration: none;
+}
 .movie-poster {
   height: 250px;
 }

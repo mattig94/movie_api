@@ -109,7 +109,7 @@ export class MainView extends React.Component {
 	logout() {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
-		window.location.reload();
+		window.open('/', '_self');
 	}
 
 	render() {
@@ -125,7 +125,7 @@ export class MainView extends React.Component {
 								<header>millenial movies</header>
 							</Col>
 							<Col sm={3} lg={2}>
-								<Button size="sm" variant="light" onClick={() => this.logout()}>Log Out</Button>
+								{/*change to dropdown for logout, view profile, edit profile*/}<Button size="sm" variant="light" onClick={() => this.logout()}>Log Out</Button>
 							</Col>
 						</Row>
 						<Row>						
@@ -136,16 +136,12 @@ export class MainView extends React.Component {
 								}
 							}/>
 
-							<Route path="/movies">
-								<Redirect to="/" />
-							</Route>
-
 							<Route path="/register" render={() => <RegistrationView onLoggedIn={user => this.onLoggedIn(user)}/>}/>
 
-							<Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)}/>}/>
+							<Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} genre={genres} director={directors}/>}/>
 
 							<Route path="/directors/:directorId" render={({match}) => <DirectorView director={directors.find(d => d._id === match.params.directorId)}/>}/>
-							
+
 							<Route path="/genres/:genreId" render={({match}) => <GenreView genre={genres.find(g => g._id === match.params.genreId)}/>}/>
 						</Row>
 					</Container>

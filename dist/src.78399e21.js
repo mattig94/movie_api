@@ -37971,21 +37971,17 @@ function (_React$Component) {
   _createClass(MovieCard, [{
     key: "render",
     value: function render() {
-      var _this$props = this.props,
-          movie = _this$props.movie,
-          onClick = _this$props.onClick;
-      return _react.default.createElement(_Card.default, {
+      var movie = this.props.movie;
+      return _react.default.createElement(_reactRouterDom.Link, {
+        to: "/movies/".concat(movie._id)
+      }, _react.default.createElement(_Card.default, {
         style: {
           width: '100%'
         }
       }, _react.default.createElement(_Card.default.Img, {
         variant: "top",
         src: movie.imgURL
-      }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, null, movie.title), _react.default.createElement(_Card.default.Text, null, movie.description), _react.default.createElement(_reactRouterDom.Link, {
-        to: "/movies/".concat(movie._id)
-      }, _react.default.createElement(_Button.default, {
-        variant: "info"
-      }, "Open"))));
+      }), _react.default.createElement(_Card.default.Body, null, _react.default.createElement(_Card.default.Title, null, movie.title), _react.default.createElement(_Card.default.Text, null, movie.description))));
     }
   }]);
 
@@ -38018,8 +38014,6 @@ var _react = _interopRequireDefault(require("react"));
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
-
-var _axios = _interopRequireDefault(require("axios"));
 
 var _reactRouterDom = require("react-router-dom");
 
@@ -38085,7 +38079,10 @@ function (_React$Component) {
   _createClass(MovieView, [{
     key: "render",
     value: function render() {
-      var movie = this.props.movie; //   const { directorObject } = this.state;
+      var _this$props = this.props,
+          movie = _this$props.movie,
+          director = _this$props.director,
+          genre = _this$props.genre; //   const { directorObject } = this.state;
       // if(!movie) return null;
       //   if(!this.directorInitialized) {
       //     this.getDirector();
@@ -38117,8 +38114,8 @@ function (_React$Component) {
         className: "value"
       }, _react.default.createElement("ul", null, movie.genres.map(function (g) {
         return _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-          to: "/genres/".concat(movie.genres)
-        }, movie.genres));
+          to: "/genres/".concat(g)
+        }, g));
       })))), _react.default.createElement("div", {
         className: "movie-director"
       }, _react.default.createElement("div", {
@@ -38146,7 +38143,7 @@ MovieView.propTypes = {
     imgURL: _propTypes.default.string.isRequired
   }).isRequired
 };
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","axios":"../../node_modules/axios/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -38496,7 +38493,7 @@ function (_React$Component) {
     value: function logout() {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.reload();
+      window.open('/', '_self');
     }
   }, {
     key: "render",
@@ -38545,10 +38542,6 @@ function (_React$Component) {
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
-        path: "/movies"
-      }, _react.default.createElement(_reactRouterDom.Redirect, {
-        to: "/"
-      })), _react.default.createElement(_reactRouterDom.Route, {
         path: "/register",
         render: function render() {
           return _react.default.createElement(_registrationView.RegistrationView, {
@@ -38564,7 +38557,9 @@ function (_React$Component) {
           return _react.default.createElement(_movieView.MovieView, {
             movie: movies.find(function (m) {
               return m._id === match.params.movieId;
-            })
+            }),
+            genre: genres,
+            director: directors
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -38683,7 +38678,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58966" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54901" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
