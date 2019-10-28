@@ -8,12 +8,15 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
+import { Link } from "react-router-dom";
+
 import { LoginView } from '../login-view/login-view';
-import {RegistrationView } from '../registration-view/registration-view'
+import { RegistrationView } from '../registration-view/registration-view'
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
+import { ProfileView } from '../profile-view/profile-view';
 
 import './main-view.scss';
 
@@ -35,6 +38,8 @@ export class MainView extends React.Component {
 				user: localStorage.getItem('user')
 			});
 			this.getMovies(accessToken);
+			this.getDirectors(accessToken);
+			this.getGenres(accessToken);
 		}
 	}
 
@@ -125,7 +130,9 @@ export class MainView extends React.Component {
 								<header>millenial movies</header>
 							</Col>
 							<Col sm={3} lg={2}>
-								{/*change to dropdown for logout, view profile, edit profile*/}<Button size="sm" variant="light" onClick={() => this.logout()}>Log Out</Button>
+								<Link to={`/users/${user}`}>
+									<Button size="sm" variant="light">My Profile</Button>
+								</Link>
 							</Col>
 						</Row>
 						<Row>						
@@ -143,6 +150,8 @@ export class MainView extends React.Component {
 							<Route path="/directors/:directorId" render={({match}) => <DirectorView director={directors.find(d => d._id === match.params.directorId)}/>}/>
 
 							<Route path="/genres/:genreId" render={({match}) => <GenreView genre={genres.find(g => g._id === match.params.genreId)}/>}/>
+
+							<Route path="/users/${user}" render{() => return <ProfileView/>}/>
 						</Row>
 					</Container>
 				</div>
