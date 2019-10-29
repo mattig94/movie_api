@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 import { Link } from "react-router-dom";
 
@@ -130,9 +131,15 @@ export class MainView extends React.Component {
 								<header>millenial movies</header>
 							</Col>
 							<Col sm={3} lg={2}>
-								<Link to={`/users/${user}`}>
-									<Button size="sm" variant="light">My Profile</Button>
-								</Link>
+								<Dropdown>
+									<Dropdown.Toggle>
+										My Profile
+									</Dropdown.Toggle>
+									<Dropdown.Menu>
+									<Link to={`/users/${user}`} className="dropdown-item">View Profile</Link>
+									<Dropdown.Item onClick={() => this.logout()}>Log Out</Dropdown.Item>
+									</Dropdown.Menu>
+								</Dropdown>
 							</Col>
 						</Row>
 						<Row>						
@@ -151,7 +158,7 @@ export class MainView extends React.Component {
 
 							<Route path="/genres/:genreId" render={({match}) => <GenreView genre={genres.find(g => g._id === match.params.genreId)}/>}/>
 
-							<Route path="/users/${user}" render{() => return <ProfileView/>}/>
+							<Route path="/users/:user" render={() => <ProfileView/>}/>
 						</Row>
 					</Container>
 				</div>

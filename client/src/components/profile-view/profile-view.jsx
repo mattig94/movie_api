@@ -24,6 +24,7 @@ export class ProfileView extends React.Component {
 				user: localStorage.getItem('user')
 			});
 			this.getUserInfo(accessToken);
+			console.log(user);
 		}
 	}
 
@@ -42,7 +43,7 @@ export class ProfileView extends React.Component {
 	}
 
 	render () {
-		const { userInfo } =this.state;
+		const { userInfo } = this.state;
 
 		return(
 			<div className="profile-view">
