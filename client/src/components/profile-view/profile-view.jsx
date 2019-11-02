@@ -32,7 +32,7 @@ export class ProfileView extends React.Component {
 		axios.get(`https://my-millennial-movies.herokuapp.com/users/${localStorage.getItem('user')}`, {
 			headers: { Authorization: `Bearer ${token}` }
 		})
-		.then(response =>{
+		.then(response => {
 			this.setState({
 				userInfo: response.data
 			});
@@ -40,6 +40,21 @@ export class ProfileView extends React.Component {
 		.catch(function(error) {
 			console.log(error);
 		});
+	}
+
+	deleteUser() {
+		axios.delete(`https://my-millennial-movies.herokuapp.com/users/${localStorage.getItem('user')}`, {
+			headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+		})
+		.then(response => {
+			alert("Your account has been deleted");
+			localStorage.removeItem('token');
+			localStorage.removeItem('user');
+			window.open('/', '_self');
+		})
+		.catch(e => {
+			console.log('There was an issue deleting your account')
+		});	
 	}
 
 	render () {
@@ -59,7 +74,7 @@ export class ProfileView extends React.Component {
 					<Link to={`/users/update/${localStorage.getItem('user')}`}>
 						<Button>Edit</Button>
 					</Link>
-					<Button>Delete User</Button>
+					<Button variant="danger" onClick={() => this.deleteUser()}>Delete User</Button>
 					<Link to={`/`}>
 						<Button variant="info">Back</Button>
 					</Link>

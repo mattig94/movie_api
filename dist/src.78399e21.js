@@ -44478,15 +44478,38 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "deleteUser",
+    value: function deleteUser() {
+      _axios.default.delete("https://my-millennial-movies.herokuapp.com/users/".concat(localStorage.getItem('user')), {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem('token'))
+        }
+      }).then(function (response) {
+        alert("Your account has been deleted");
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.open('/', '_self');
+      }).catch(function (e) {
+        console.log('There was an issue deleting your account');
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       var userInfo = this.state.userInfo;
       if (!userInfo) return null;
       return _react.default.createElement("div", {
         className: "profile-view"
       }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday)), _react.default.createElement(_reactRouterDom.Link, {
         to: "/users/update/".concat(localStorage.getItem('user'))
-      }, _react.default.createElement(_Button.default, null, "Edit")), _react.default.createElement(_Button.default, null, "Delete User"), _react.default.createElement(_reactRouterDom.Link, {
+      }, _react.default.createElement(_Button.default, null, "Edit")), _react.default.createElement(_Button.default, {
+        variant: "danger",
+        onClick: function onClick() {
+          return _this3.deleteUser();
+        }
+      }, "Delete User"), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "info"
@@ -44556,15 +44579,18 @@ function ProfileUpdate(props) {
   var handleSubmit = function handleSubmit(e) {
     e.preventDefault();
 
-    _axios.default.put("https://my-millennial-movies.herokuapp.com/users/".concat(localStorage.getItem('user'), "\n\t\t\t "), {
+    _axios.default.put("https://my-millennial-movies.herokuapp.com/users/".concat(localStorage.getItem('user')), {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem('token'))
+      },
       username: username,
+      password: password,
       email: email,
       birthday: birthday,
-      password: password
+      favorites: []
     }).then(function (response) {
       var data = response.data;
       console.log(data);
-      window.open('/', '_self');
     }).catch(function (e) {
       console.log('There was an issue updating your user information');
     });

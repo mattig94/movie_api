@@ -15,17 +15,17 @@ export function ProfileUpdate(props) {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		axios.put(`https://my-millennial-movies.herokuapp.com/users/${localStorage.getItem('user')}
-			 `, {
+		axios.put(`https://my-millennial-movies.herokuapp.com/users/${localStorage.getItem('user')}`, {
+			headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
 			username: username,
+			password: password,
 			email: email,
 			birthday: birthday,
-			password: password
+			favorites: []
 		})
 		.then(response => {
 			const data = response.data;
 			console.log(data);
-			window.open('/', '_self');
 		})
 		.catch(e => {
 			console.log('There was an issue updating your user information')
