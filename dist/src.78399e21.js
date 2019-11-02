@@ -44580,17 +44580,20 @@ function ProfileUpdate(props) {
     e.preventDefault();
 
     _axios.default.put("https://my-millennial-movies.herokuapp.com/users/".concat(localStorage.getItem('user')), {
-      headers: {
-        Authorization: "Bearer ".concat(localStorage.getItem('token'))
-      },
       username: username,
       password: password,
       email: email,
       birthday: birthday,
       favorites: []
+    }, {
+      headers: {
+        Authorization: "Bearer ".concat(localStorage.getItem('token'))
+      }
     }).then(function (response) {
       var data = response.data;
       console.log(data);
+      alert("Your user info has been updated");
+      window.open("/users/".concat(localStorage.getItem('user')), '_self');
     }).catch(function (e) {
       console.log('There was an issue updating your user information');
     });
@@ -45014,7 +45017,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61542" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62609" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
