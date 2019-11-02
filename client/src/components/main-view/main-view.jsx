@@ -18,6 +18,7 @@ import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
 import { GenreView } from '../genre-view/genre-view';
 import { ProfileView } from '../profile-view/profile-view';
+import { ProfileUpdate } from '../profile-view/profile-update';
 
 import './main-view.scss';
 
@@ -159,6 +160,8 @@ export class MainView extends React.Component {
 							<Route path="/genres/:genreId" render={({match}) => <GenreView genre={genres.find(g => g._id === match.params.genreId)}/>}/>
 
 							<Route path="/users/:user" render={() => <ProfileView/>}/>
+
+							<Route path="/users/update/:user" render={() => <ProfileUpdate/>}/>
 						</Row>
 					</Container>
 				</div>

@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import { Link } from "react-router-dom";
 
-// import '/profile-view.scss';
+import './profile-view.scss';
 
 export class ProfileView extends React.Component {
 	constructor() {
@@ -24,12 +25,11 @@ export class ProfileView extends React.Component {
 				user: localStorage.getItem('user')
 			});
 			this.getUserInfo(accessToken);
-			console.log(user);
 		}
 	}
 
 	getUserInfo(token) {
-		axios.get(`https://my-millennial-movies.herokuapp.com/users/${user}`, {
+		axios.get(`https://my-millennial-movies.herokuapp.com/users/${localStorage.getItem('user')}`, {
 			headers: { Authorization: `Bearer ${token}` }
 		})
 		.then(response =>{
@@ -45,18 +45,24 @@ export class ProfileView extends React.Component {
 	render () {
 		const { userInfo } = this.state;
 
+		if (!userInfo) return null;
+
 		return(
 			<div className="profile-view">
 				<h3>My Profile</h3>
 				<ListGroup>
 					<ListGroup.Item>Username: {userInfo.username}</ListGroup.Item>
-					<ListGroup.Item>Password:</ListGroup.Item>
+					<ListGroup.Item>Password: *****</ListGroup.Item>
 					<ListGroup.Item>Email: {userInfo.email}</ListGroup.Item>
 					<ListGroup.Item>Birthday: {userInfo.birthday}</ListGroup.Item>
 				</ListGroup>
-				<Link to={`/`}>
-					<Button variant="info">Back</Button>
-				</Link>
+					<Link to={`/users/update/${localStorage.getItem('user')}`}>
+						<Button>Edit</Button>
+					</Link>
+					<Button>Delete User</Button>
+					<Link to={`/`}>
+						<Button variant="info">Back</Button>
+					</Link>
 			</div>
 		)
 	}

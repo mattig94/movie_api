@@ -20,6 +20,9 @@ a:hover {
 .movie-poster {
   height: 250px;
 }
+.btn {
+  margin: 2px;
+}
 body {
   margin: 15px;
   background: #f7cac9;
