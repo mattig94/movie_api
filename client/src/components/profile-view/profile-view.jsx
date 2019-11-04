@@ -70,6 +70,7 @@ export class ProfileView extends React.Component {
 					<ListGroup.Item>Password: *****</ListGroup.Item>
 					<ListGroup.Item>Email: {userInfo.email}</ListGroup.Item>
 					<ListGroup.Item>Birthday: {userInfo.birthday}</ListGroup.Item>
+					<ListGroup.Item>Favorite Movies: <ul>{userInfo.favorites.map(f => <li key={f}>{JSON.parse(localStorage.getItem('movies')).find(m => m._id === f).title}</li>)}</ul></ListGroup.Item>
 				</ListGroup>
 					<Link to={`/users/update/${localStorage.getItem('user')}`}>
 						<Button>Edit</Button>

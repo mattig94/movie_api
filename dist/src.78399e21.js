@@ -44502,7 +44502,13 @@ function (_React$Component) {
       if (!userInfo) return null;
       return _react.default.createElement("div", {
         className: "profile-view"
-      }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday)), _react.default.createElement(_reactRouterDom.Link, {
+      }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favorite Movies: ", _react.default.createElement("ul", null, userInfo.favorites.map(function (f) {
+        return _react.default.createElement("li", {
+          key: f
+        }, JSON.parse(localStorage.getItem('movies')).find(function (m) {
+          return m._id === f;
+        }).title);
+      })))), _react.default.createElement(_reactRouterDom.Link, {
         to: "/users/update/".concat(localStorage.getItem('user'))
       }, _react.default.createElement(_Button.default, null, "Edit")), _react.default.createElement(_Button.default, {
         variant: "danger",
@@ -44765,6 +44771,8 @@ function (_React$Component) {
         _this2.setState({
           movies: response.data
         });
+
+        localStorage.setItem('movies', JSON.stringify(response.data));
       }).catch(function (error) {
         console.log(error);
       });
