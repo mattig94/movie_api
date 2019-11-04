@@ -57,6 +57,19 @@ export class ProfileView extends React.Component {
 		});	
 	}
 
+	deleteFavorite(f) {
+		axios.delete(`https://my-millennial-movies.herokuapp.com/users/${localStorage.getItem('user')}/favorites/${f}`, {
+			headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+		})
+		.then(response => {
+			alert("Movie has been removed from favorites");
+			window.open(`/users/${localStorage.getItem('user')}`, '_self');
+		})
+		.catch(e => {
+			console.log('There was an issue removing movie from favorites')
+		});	
+	}
+
 	render () {
 		const { userInfo } = this.state;
 
@@ -70,7 +83,13 @@ export class ProfileView extends React.Component {
 					<ListGroup.Item>Password: *****</ListGroup.Item>
 					<ListGroup.Item>Email: {userInfo.email}</ListGroup.Item>
 					<ListGroup.Item>Birthday: {userInfo.birthday}</ListGroup.Item>
-					<ListGroup.Item>Favorite Movies: <ul>{userInfo.favorites.map(f => <li key={f}>{JSON.parse(localStorage.getItem('movies')).find(m => m._id === f).title}</li>)}</ul></ListGroup.Item>
+					<ListGroup.Item>Favorite Movies: 
+						<ul>{userInfo.favorites.map(f => 
+							<li key={f}>{JSON.parse(localStorage.getItem('movies')).find(m => m._id === f).title} 
+								<Button variant="danger" size="sm" onClick={() => this.deleteFavorite(f)}>Remove</Button>
+							</li>)}
+						</ul>
+					</ListGroup.Item>
 				</ListGroup>
 					<Link to={`/users/update/${localStorage.getItem('user')}`}>
 						<Button>Edit</Button>

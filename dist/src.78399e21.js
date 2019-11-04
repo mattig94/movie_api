@@ -44494,6 +44494,20 @@ function (_React$Component) {
       });
     }
   }, {
+    key: "deleteFavorite",
+    value: function deleteFavorite(f) {
+      _axios.default.delete("https://my-millennial-movies.herokuapp.com/users/".concat(localStorage.getItem('user'), "/favorites/").concat(f), {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem('token'))
+        }
+      }).then(function (response) {
+        alert("Movie has been removed from favorites");
+        window.open("/users/".concat(localStorage.getItem('user')), '_self');
+      }).catch(function (e) {
+        console.log('There was an issue removing movie from favorites');
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this3 = this;
@@ -44502,12 +44516,18 @@ function (_React$Component) {
       if (!userInfo) return null;
       return _react.default.createElement("div", {
         className: "profile-view"
-      }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favorite Movies: ", _react.default.createElement("ul", null, userInfo.favorites.map(function (f) {
+      }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favorite Movies:", _react.default.createElement("ul", null, userInfo.favorites.map(function (f) {
         return _react.default.createElement("li", {
           key: f
         }, JSON.parse(localStorage.getItem('movies')).find(function (m) {
           return m._id === f;
-        }).title);
+        }).title, _react.default.createElement(_Button.default, {
+          variant: "danger",
+          size: "sm",
+          onClick: function onClick() {
+            return _this3.deleteFavorite(f);
+          }
+        }, "Remove"));
       })))), _react.default.createElement(_reactRouterDom.Link, {
         to: "/users/update/".concat(localStorage.getItem('user'))
       }, _react.default.createElement(_Button.default, null, "Edit")), _react.default.createElement(_Button.default, {
