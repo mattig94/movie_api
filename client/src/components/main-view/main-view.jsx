@@ -15,9 +15,10 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import { Link } from "react-router-dom";
 
+import MovieList from '../movie-list/movie-list';
+
 import { LoginView } from '../login-view/login-view';
 import { RegistrationView } from '../registration-view/registration-view';
-import { MovieList } from '../movie-list/movie-list';
 import { MovieCard } from '../movie-card/movie-card';
 import { MovieView } from '../movie-view/movie-view';
 import { DirectorView } from '../director-view/director-view';
@@ -50,19 +51,19 @@ export class MainView extends React.Component {
 		}
 	}
 
-	onMovieClick(movie) {
-		let movies = this.state.movies;
-		this.setState({
-			movies: movies,
-		});
-	}
+	// onMovieClick(movie) {
+	// 	let movies = this.state.movies;
+	// 	this.setState({
+	// 		movies: movies,
+	// 	});
+	// }
 
-	onBackButtonClick() {
-		let movies = this.state.movies;
-		this.setState({
-			movies: movies,
-		})
-	}
+	// onBackButtonClick() {
+	// 	let movies = this.state.movies;
+	// 	this.setState({
+	// 		movies: movies,
+	// 	})
+	// }
 
 	getMovies(token) {
 		axios.get('https://my-millennial-movies.herokuapp.com/movies', {
@@ -126,7 +127,7 @@ export class MainView extends React.Component {
 		let { movies } = this.props;
 		const { user, directors, genres } = this.state;
 
-		if (!movies) return <div className="main-view"/>;
+	/*	if (!movies) return <div className="main-view"/>;*/
 		return (
 			<Router>
 				<div className="main-view">
