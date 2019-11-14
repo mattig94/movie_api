@@ -38558,13 +38558,23 @@ if ("development" !== "production") {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.setUser = setUser;
 exports.setMovies = setMovies;
 exports.setFilter = setFilter;
-exports.SET_FILTER = exports.SET_MOVIES = void 0;
+exports.SET_FILTER = exports.SET_MOVIES = exports.SET_USER = void 0;
+var SET_USER = 'SET_USER';
+exports.SET_USER = SET_USER;
 var SET_MOVIES = 'SET_MOVIES';
 exports.SET_MOVIES = SET_MOVIES;
 var SET_FILTER = 'SET_FILTER';
 exports.SET_FILTER = SET_FILTER;
+
+function setUser(value) {
+  return {
+    type: SET_USER,
+    value: value
+  };
+}
 
 function setMovies(value) {
   return {
@@ -45798,6 +45808,10 @@ var _visibilityFilterInput = _interopRequireDefault(require("../visibility-filte
 
 var _movieCard = require("../movie-card/movie-card");
 
+var _Row = _interopRequireDefault(require("react-bootstrap/Row"));
+
+var _Col = _interopRequireDefault(require("react-bootstrap/Col"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var mapStateToProps = function mapStateToProps(state) {
@@ -45823,20 +45837,31 @@ function MovieList(props) {
   });
   return _react.default.createElement("div", {
     className: "movie-list"
+  }, _react.default.createElement(_Row.default, null, _react.default.createElement(_Col.default, {
+    xl: 3,
+    lg: 4,
+    md: 6,
+    sm: 12
   }, _react.default.createElement(_visibilityFilterInput.default, {
     visibilityFilter: visibilityFilter
-  }), filteredMovies.map(function (m) {
-    return _react.default.createElement(_movieCard.MovieCard, {
+  }))), _react.default.createElement(_Row.default, null, filteredMovies.map(function (m) {
+    return _react.default.createElement(_Col.default, {
+      key: m._id,
+      xl: 3,
+      lg: 4,
+      md: 6,
+      sm: 12
+    }, _react.default.createElement(_movieCard.MovieCard, {
       key: m._id,
       movie: m
-    });
-  }));
+    }));
+  })));
 }
 
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MovieList);
 
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../visibility-filter-input/visibility-filter-input":"components/visibility-filter-input/visibility-filter-input.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx"}],"components/login-view/login-view.scss":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","react-redux":"../../node_modules/react-redux/es/index.js","../visibility-filter-input/visibility-filter-input":"components/visibility-filter-input/visibility-filter-input.jsx","../movie-card/movie-card":"components/movie-card/movie-card.jsx","react-bootstrap/Row":"../../node_modules/react-bootstrap/Row.js","react-bootstrap/Col":"../../node_modules/react-bootstrap/Col.js"}],"components/login-view/login-view.scss":[function(require,module,exports) {
 var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
@@ -45895,6 +45920,7 @@ function LoginView(props) {
     }).then(function (response) {
       var data = response.data;
       props.onLoggedIn(data);
+      window.open('/', '_self');
     }).catch(function (e) {
       console.log('no such user');
       alert('no such user');
@@ -46807,13 +46833,15 @@ module.hot.accept(reloadCSS);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.ProfileView = void 0;
+exports.default = exports.ProfileView = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
 var _axios = _interopRequireDefault(require("axios"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _reactRedux = require("react-redux");
 
 var _ListGroup = _interopRequireDefault(require("react-bootstrap/ListGroup"));
 
@@ -46927,23 +46955,14 @@ function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
+      var _this$props = this.props,
+          user = _this$props.user,
+          movies = _this$props.movies;
       var userInfo = this.state.userInfo;
       if (!userInfo) return null;
       return _react.default.createElement("div", {
         className: "profile-view"
-      }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favorite Movies:", _react.default.createElement("ul", null, userInfo.favorites.map(function (f) {
-        return _react.default.createElement("li", {
-          key: f
-        }, JSON.parse(localStorage.getItem('movies')).find(function (m) {
-          return m._id === f;
-        }).title, _react.default.createElement(_Button.default, {
-          variant: "danger",
-          size: "sm",
-          onClick: function onClick() {
-            return _this3.deleteFavorite(f);
-          }
-        }, "Remove"));
-      })))), _react.default.createElement(_reactRouterDom.Link, {
+      }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday)), _react.default.createElement(_reactRouterDom.Link, {
         to: "/users/update/".concat(localStorage.getItem('user'))
       }, _react.default.createElement(_Button.default, null, "Edit")), _react.default.createElement(_Button.default, {
         variant: "danger",
@@ -46962,7 +46981,18 @@ function (_React$Component) {
 }(_react.default.Component);
 
 exports.ProfileView = ProfileView;
-},{"react":"../../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/ListGroup":"../../node_modules/react-bootstrap/ListGroup.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-bootstrap/ButtonGroup":"../../node_modules/react-bootstrap/ButtonGroup.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/profile-view/profile-update.jsx":[function(require,module,exports) {
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.user,
+    movies: state.movies
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(ProfileView);
+
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","prop-types":"../../node_modules/prop-types/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-bootstrap/ListGroup":"../../node_modules/react-bootstrap/ListGroup.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-bootstrap/ButtonGroup":"../../node_modules/react-bootstrap/ButtonGroup.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./profile-view.scss":"components/profile-view/profile-view.scss"}],"components/profile-view/profile-update.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -47182,19 +47212,7 @@ function (_React$Component) {
         this.getDirectors(accessToken);
         this.getGenres(accessToken);
       }
-    } // onMovieClick(movie) {
-    // 	let movies = this.state.movies;
-    // 	this.setState({
-    // 		movies: movies,
-    // 	});
-    // }
-    // onBackButtonClick() {
-    // 	let movies = this.state.movies;
-    // 	this.setState({
-    // 		movies: movies,
-    // 	})
-    // }
-
+    }
   }, {
     key: "getMovies",
     value: function getMovies(token) {
@@ -47251,6 +47269,7 @@ function (_React$Component) {
       this.setState({
         user: authData.user.username
       });
+      this.props.setUser(authData.user);
       localStorage.setItem('token', authData.token);
       localStorage.setItem('user', authData.user.username);
       this.getMovies(authData.token);
@@ -47262,16 +47281,17 @@ function (_React$Component) {
     value: function logout() {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.open('/', '_self');
+      window.open('/login', '_self');
     }
   }, {
     key: "render",
     value: function render() {
       var _this5 = this;
 
-      var movies = this.props.movies;
+      var _this$props = this.props,
+          movies = _this$props.movies,
+          user = _this$props.user;
       var _this$state = this.state,
-          user = _this$state.user,
           directors = _this$state.directors,
           genres = _this$state.genres;
       /*	if (!movies) return <div className="main-view"/>;*/
@@ -47282,7 +47302,7 @@ function (_React$Component) {
         sm: 3,
         lg: 2
       }, _react.default.createElement(_Dropdown.default, null, _react.default.createElement(_Dropdown.default.Toggle, null, "My Profile"), _react.default.createElement(_Dropdown.default.Menu, null, _react.default.createElement(_reactRouterDom.Link, {
-        to: "/users/".concat(user),
+        to: "/users/".concat(localStorage.getItem('user')),
         className: "dropdown-item"
       }, "View Profile"), _react.default.createElement(_Dropdown.default.Item, {
         onClick: function onClick() {
@@ -47305,6 +47325,15 @@ function (_React$Component) {
         path: "/register",
         render: function render() {
           return _react.default.createElement(_registrationView.RegistrationView, {
+            onLoggedIn: function onLoggedIn(user) {
+              return _this5.onLoggedIn(user);
+            }
+          });
+        }
+      }), _react.default.createElement(_reactRouterDom.Route, {
+        path: "/login",
+        render: function render() {
+          return _react.default.createElement(_loginView.LoginView, {
             onLoggedIn: function onLoggedIn(user) {
               return _this5.onLoggedIn(user);
             }
@@ -47345,7 +47374,9 @@ function (_React$Component) {
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/users/:user",
         render: function render() {
-          return _react.default.createElement(_profileView.ProfileView, null);
+          return _react.default.createElement(_profileView.ProfileView, {
+            movies: movies
+          });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
         path: "/users/update/:user",
@@ -47363,12 +47394,14 @@ exports.MainView = MainView;
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    movies: state.movies
+    movies: state.movies,
+    user: state.user
   };
 };
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, {
-  setMovies: _actions.setMovies
+  setMovies: _actions.setMovies,
+  setUser: _actions.setUser
 })(MainView);
 
 exports.default = _default;
@@ -47383,6 +47416,19 @@ exports.default = void 0;
 var _redux = require("redux");
 
 var _actions = require("../actions/actions");
+
+function user() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions.SET_USER:
+      return action.value;
+
+    default:
+      return state;
+  }
+}
 
 function visibilityFilter() {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -47411,6 +47457,7 @@ function movies() {
 }
 
 var moviesApp = (0, _redux.combineReducers)({
+  user: user,
   visibilityFilter: visibilityFilter,
   movies: movies
 });
@@ -47514,7 +47561,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61628" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52924" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

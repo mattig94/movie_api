@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 
-import { setMovies } from '../../actions/actions';
+import { setUser, setMovies } from '../../actions/actions';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -50,20 +50,6 @@ export class MainView extends React.Component {
 			this.getGenres(accessToken);
 		}
 	}
-
-	// onMovieClick(movie) {
-	// 	let movies = this.state.movies;
-	// 	this.setState({
-	// 		movies: movies,
-	// 	});
-	// }
-
-	// onBackButtonClick() {
-	// 	let movies = this.state.movies;
-	// 	this.setState({
-	// 		movies: movies,
-	// 	})
-	// }
 
 	getMovies(token) {
 		axios.get('https://my-millennial-movies.herokuapp.com/movies', {
@@ -110,6 +96,7 @@ export class MainView extends React.Component {
 		this.setState({
 			user: authData.user.username
 		});
+		this.props.setUser(authData.user);
 		localStorage.setItem('token', authData.token);
 		localStorage.setItem('user', authData.user.username);
 		this.getMovies(authData.token);
@@ -120,12 +107,12 @@ export class MainView extends React.Component {
 	logout() {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
-		window.open('/', '_self');
+		window.open('/login', '_self');
 	}
 
 	render() {
-		let { movies } = this.props;
-		const { user, directors, genres } = this.state;
+		let { movies, user } = this.props;
+		const { directors, genres } = this.state;
 
 	/*	if (!movies) return <div className="main-view"/>;*/
 		return (
@@ -142,7 +129,7 @@ export class MainView extends React.Component {
 										My Profile
 									</Dropdown.Toggle>
 									<Dropdown.Menu>
-									<Link to={`/users/${user}`} className="dropdown-item">View Profile</Link>
+									<Link to={`/users/${localStorage.getItem('user')}`} className="dropdown-item">View Profile</Link>
 									<Dropdown.Item onClick={() => this.logout()}>Log Out</Dropdown.Item>
 									</Dropdown.Menu>
 								</Dropdown>
@@ -158,13 +145,15 @@ export class MainView extends React.Component {
 
 							<Route path="/register" render={() => <RegistrationView onLoggedIn={user => this.onLoggedIn(user)}/>}/>
 
+							<Route path="/login" render={() => <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>}/>
+
 							<Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} genre={genres} director={directors}/>}/>
 
 							<Route path="/directors/:directorId" render={({match}) => <DirectorView director={directors.find(d => d._id === match.params.directorId)}/>}/>
 
 							<Route path="/genres/:genreId" render={({match}) => <GenreView genre={genres.find(g => g._id === match.params.genreId)}/>}/>
 
-							<Route path="/users/:user" render={() => <ProfileView/>}/>
+							<Route path="/users/:user" render={() => <ProfileView movies={movies}/>}/>
 
 							<Route path="/users/update/:user" render={() => <ProfileUpdate/>}/>
 						</Row>
@@ -176,7 +165,10 @@ export class MainView extends React.Component {
 }
 
 let mapStateToProps = state => {
-	return { movies: state.movies }
+	return {
+		movies: state.movies,
+		user: state.user
+	}
 }
 
-export default connect(mapStateToProps, { setMovies } )(MainView);
+export default connect(mapStateToProps, { setMovies, setUser } )(MainView);

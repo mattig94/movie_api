@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
@@ -71,6 +72,7 @@ export class ProfileView extends React.Component {
 	}
 
 	render () {
+		const { user, movies } = this.props
 		const { userInfo } = this.state;
 
 		if (!userInfo) return null;
@@ -83,13 +85,13 @@ export class ProfileView extends React.Component {
 					<ListGroup.Item>Password: *****</ListGroup.Item>
 					<ListGroup.Item>Email: {userInfo.email}</ListGroup.Item>
 					<ListGroup.Item>Birthday: {userInfo.birthday}</ListGroup.Item>
-					<ListGroup.Item>Favorite Movies: 
+					{/*<ListGroup.Item>Favorite Movies: 
 						<ul>{userInfo.favorites.map(f => 
-							<li key={f}>{JSON.parse(localStorage.getItem('movies')).find(m => m._id === f).title} 
+							<li key={f}>{movies.find(m => m._id === f).title} 
 								<Button variant="danger" size="sm" onClick={() => this.deleteFavorite(f)}>Remove</Button>
 							</li>)}
 						</ul>
-					</ListGroup.Item>
+					</ListGroup.Item>*/}
 				</ListGroup>
 					<Link to={`/users/update/${localStorage.getItem('user')}`}>
 						<Button>Edit</Button>
@@ -103,3 +105,11 @@ export class ProfileView extends React.Component {
 	}
 }
 
+let mapStateToProps = state => {
+	return {
+		user: state.user,
+		movies: state.movies
+	}
+}
+
+export default connect(mapStateToProps)(ProfileView);
