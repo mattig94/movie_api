@@ -86,7 +86,7 @@ app.get('/', function(req, res) {
     res.status(500).send("Error: " + error);
   });
 });*/
-movie by id
+//movie by id
 app.get('/movies/:movieID', function(req, res) {
   Movies.findOne({_id: req.params.movieID})
   .then(function(movie) {
