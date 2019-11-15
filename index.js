@@ -76,7 +76,7 @@ app.get('/', function(req, res) {
   res.send('Welcome to myFlix!')
 });
 //movie by title
-app.get('/movies/:title', passport.authenticate('jwt', {session: false}), function(req, res) {
+/*app.get('/movies/:title', passport.authenticate('jwt', {session: false}), function(req, res) {
   Movies.findOne({title: req.params.title})
   .then(function(movie) {
     res.json(movie)
@@ -85,29 +85,29 @@ app.get('/movies/:title', passport.authenticate('jwt', {session: false}), functi
     console.error(error);
     res.status(500).send("Error: " + error);
   });
+});*/
+movie by id
+app.get('/movies/:movieID', function(req, res) {
+  Movies.findOne({_id: req.params.movieID})
+  .then(function(movie) {
+    res.json(movie)
+  })
+  .catch(function(error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
 });
-//movie by id
-// app.get('/movies/:movieID', function(req, res) {
-//   Movies.findOne({_id: req.params.movieID})
-//   .then(function(movie) {
-//     res.json(movie)
-//   })
-//   .catch(function(error) {
-//     console.error(error);
-//     res.status(500).send("Error: " + error);
-//   });
-// });
-//genre details by name
-// app.get('/genres/:name', passport.authenticate('jwt', {session: false}), function(req, res) {
-//   Genres.findOne({name: req.params.name})
-//   .then(function(genre) {
-//     res.json(genre)
-//   })
-//   .catch(function(error) {
-//     console.error(error);
-//     res.status(500).send("Error: " + error);
-//   });
-// });
+genre details by name
+app.get('/genres/:name', passport.authenticate('jwt', {session: false}), function(req, res) {
+  Genres.findOne({name: req.params.name})
+  .then(function(genre) {
+    res.json(genre)
+  })
+  .catch(function(error) {
+    console.error(error);
+    res.status(500).send("Error: " + error);
+  });
+});
 //genre details by id
 app.get('/genres/:genreID', passport.authenticate('jwt', {session: false}), function(req, res) {
   Genres.findOne({_id: req.params.genreID})

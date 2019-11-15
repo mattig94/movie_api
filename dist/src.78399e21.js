@@ -46198,6 +46198,14 @@ function (_React$Component) {
         className: "value"
       }, _react.default.createElement(_reactRouterDom.Link, {
         to: "/directors/".concat(movie.director)
+      }, movie.director))), _react.default.createElement("div", {
+        className: "movie-director"
+      }, _react.default.createElement("div", {
+        className: "label"
+      }, "Director"), _react.default.createElement("div", {
+        className: "value"
+      }, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/directors/".concat(movie.director)
       }, movie.director))), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
