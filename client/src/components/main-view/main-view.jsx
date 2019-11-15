@@ -110,7 +110,7 @@ export class MainView extends React.Component {
 		let { movies, user, directors, genres } = this.props;
 		
 		return (
-			<Router>
+			<Router basename="/client">
 				<div className="main-view">
 					<Container>
 						<Row>

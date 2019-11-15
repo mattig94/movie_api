@@ -47335,7 +47335,9 @@ function (_React$Component) {
           user = _this$props.user,
           directors = _this$props.directors,
           genres = _this$props.genres;
-      return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
+      return _react.default.createElement(_reactRouterDom.BrowserRouter, {
+        basename: "/client"
+      }, _react.default.createElement("div", {
         className: "main-view"
       }, _react.default.createElement(_Container.default, null, _react.default.createElement(_Row.default, null, _react.default.createElement(_Col.default, null, _react.default.createElement("header", null, "millenial movies")), _react.default.createElement(_Col.default, {
         sm: 3,
