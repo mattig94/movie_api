@@ -40,14 +40,12 @@ export class MovieView extends React.Component {
                 {genres.find(g => g._id === mg).name}
               </Link>
             </li>)}</ul></div> 	
-				</div>
-				<div className="movie-director">
-					<div className="label">Director</div>
-          <div className="value"><Link to={`/directors/${movie.director}`}>{movie.director}</Link></div>  
-				</div>        
+				</div>   
         <div className="movie-director">
           <div className="label">Director</div>
-          <div className="value"><Link to={`/directors/${movie.director}`}>{movie.director}</Link></div>  
+          <div className="value"><Link to={`/directors/${movie.director}`}>
+            {directors.find(d => d._id === movie.director).name}
+          </Link></div>  
         </div>
 				<Link to={`/`}>
 					<Button variant="info">Back</Button>
