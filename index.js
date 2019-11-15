@@ -97,7 +97,7 @@ app.get('/movies/:movieID', function(req, res) {
     res.status(500).send("Error: " + error);
   });
 });
-genre details by name
+//genre details by name
 app.get('/genres/:name', passport.authenticate('jwt', {session: false}), function(req, res) {
   Genres.findOne({name: req.params.name})
   .then(function(genre) {
