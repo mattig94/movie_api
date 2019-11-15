@@ -1,5 +1,5 @@
 import React from 'react';
-// import axios from 'axios';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
@@ -17,6 +17,18 @@ export class MovieView extends React.Component {
 		super();
 		this.state = {};
 	}
+
+    addFavorite(movieID) {
+    axios.post(`https://my-millennial-movies.herokuapp.com/users/${localStorage.getItem('user')}/favorites/${movieID}`, null, {
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    })
+    .then(response => {
+      alert("Movie has been added to favorites");
+    })
+    .catch(e => {
+      console.log('There was an issue adding movie to favorites')
+    }); 
+  }
 
 	render() {
 		const { movie, directors, genres } = this.props;
@@ -47,6 +59,7 @@ export class MovieView extends React.Component {
             {directors.find(d => d._id === movie.director).name}
           </Link></div>  
         </div>
+        <Button onClick={() => this.addFavorite(movie._id)}>Add to Favorites</Button>
 				<Link to={`/`}>
 					<Button variant="info">Back</Button>
 				</Link>

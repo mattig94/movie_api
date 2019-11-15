@@ -46107,6 +46107,8 @@ exports.default = exports.MovieView = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
+var _axios = _interopRequireDefault(require("axios"));
+
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
 var _reactRedux = require("react-redux");
@@ -46153,8 +46155,23 @@ function (_React$Component) {
   }
 
   _createClass(MovieView, [{
+    key: "addFavorite",
+    value: function addFavorite(movieID) {
+      _axios.default.post("https://my-millennial-movies.herokuapp.com/users/".concat(localStorage.getItem('user'), "/favorites/").concat(movieID), null, {
+        headers: {
+          Authorization: "Bearer ".concat(localStorage.getItem('token'))
+        }
+      }).then(function (response) {
+        alert("Movie has been added to favorites");
+      }).catch(function (e) {
+        console.log('There was an issue adding movie to favorites');
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       var _this$props = this.props,
           movie = _this$props.movie,
           directors = _this$props.directors,
@@ -46200,7 +46217,11 @@ function (_React$Component) {
         to: "/directors/".concat(movie.director)
       }, directors.find(function (d) {
         return d._id === movie.director;
-      }).name))), _react.default.createElement(_reactRouterDom.Link, {
+      }).name))), _react.default.createElement(_Button.default, {
+        onClick: function onClick() {
+          return _this2.addFavorite(movie._id);
+        }
+      }, "Add to Favorites"), _react.default.createElement(_reactRouterDom.Link, {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "info"
@@ -46232,7 +46253,7 @@ var mapStateToProps = function mapStateToProps(state) {
 var _default = (0, _reactRedux.connect)(mapStateToProps)(MovieView);
 
 exports.default = _default;
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
+},{"react":"../../node_modules/react/index.js","axios":"../../node_modules/axios/index.js","prop-types":"../../node_modules/prop-types/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
