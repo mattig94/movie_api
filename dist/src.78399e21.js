@@ -38561,13 +38561,19 @@ Object.defineProperty(exports, "__esModule", {
 exports.setUser = setUser;
 exports.setMovies = setMovies;
 exports.setFilter = setFilter;
-exports.SET_FILTER = exports.SET_MOVIES = exports.SET_USER = void 0;
+exports.setGenres = setGenres;
+exports.setDirectors = setDirectors;
+exports.SET_DIRECTORS = exports.SET_GENRES = exports.SET_FILTER = exports.SET_MOVIES = exports.SET_USER = void 0;
 var SET_USER = 'SET_USER';
 exports.SET_USER = SET_USER;
 var SET_MOVIES = 'SET_MOVIES';
 exports.SET_MOVIES = SET_MOVIES;
 var SET_FILTER = 'SET_FILTER';
 exports.SET_FILTER = SET_FILTER;
+var SET_GENRES = 'SET_GENRES';
+exports.SET_GENRES = SET_GENRES;
+var SET_DIRECTORS = 'SET_DIRECTORS';
+exports.SET_DIRECTORS = SET_DIRECTORS;
 
 function setUser(value) {
   return {
@@ -38586,6 +38592,20 @@ function setMovies(value) {
 function setFilter(value) {
   return {
     type: SET_FILTER,
+    value: value
+  };
+}
+
+function setGenres(value) {
+  return {
+    type: SET_GENRES,
+    value: value
+  };
+}
+
+function setDirectors(value) {
+  return {
+    type: SET_DIRECTORS,
     value: value
   };
 }
@@ -46083,11 +46103,13 @@ module.hot.accept(reloadCSS);
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.MovieView = void 0;
+exports.default = exports.MovieView = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
+
+var _reactRedux = require("react-redux");
 
 var _Button = _interopRequireDefault(require("react-bootstrap/Button"));
 
@@ -46126,45 +46148,17 @@ function (_React$Component) {
     _classCallCheck(this, MovieView);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(MovieView).call(this));
-    _this.state = {}; // this.directorInitialized = false;
-
+    _this.state = {};
     return _this;
-  } // getDirector() {
-  //   const { movie } = this.props;
-  //   if(!movie) return;
-  //   let accessToken = localStorage.getItem('token');
-  //   if (accessToken !== null) {
-  //     this.setState({
-  //       user: localStorage.getItem('user')
-  //     });
-  //     axios.get(`https://my-millennial-movies.herokuapp.com/directors/${movie.director}`, {
-  //       headers: { Authorization: `Bearer ${accessToken}` }
-  //     })
-  //     .then(response => {
-  //       this.setState({
-  //         directorObject: response.data
-  //       });
-  //     })
-  //     .catch(function(error) {
-  //       console.log(error);
-  //     });
-  //   }
-  // }
-
+  }
 
   _createClass(MovieView, [{
     key: "render",
     value: function render() {
       var _this$props = this.props,
           movie = _this$props.movie,
-          director = _this$props.director,
-          genre = _this$props.genre; //   const { directorObject } = this.state;
-      // if(!movie) return null;
-      //   if(!this.directorInitialized) {
-      //     this.getDirector();
-      //     this.directorInitialized = true;
-      //   };
-
+          directors = _this$props.directors,
+          genres = _this$props.genres;
       return _react.default.createElement("div", {
         className: "movie-view"
       }, _react.default.createElement("div", {
@@ -46188,10 +46182,14 @@ function (_React$Component) {
         className: "label"
       }, "Genre"), _react.default.createElement("div", {
         className: "value"
-      }, _react.default.createElement("ul", null, movie.genres.map(function (g) {
-        return _react.default.createElement("li", null, _react.default.createElement(_reactRouterDom.Link, {
-          to: "/genres/".concat(g)
-        }, g));
+      }, _react.default.createElement("ul", null, movie.genres.map(function (mg) {
+        return _react.default.createElement("li", {
+          key: mg
+        }, _react.default.createElement(_reactRouterDom.Link, {
+          to: "/genres/".concat(mg)
+        }, genres.find(function (g) {
+          return g._id === mg;
+        }).name));
       })))), _react.default.createElement("div", {
         className: "movie-director"
       }, _react.default.createElement("div", {
@@ -46219,7 +46217,20 @@ MovieView.propTypes = {
     imgURL: _propTypes.default.string.isRequired
   }).isRequired
 };
-},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    user: state.user,
+    movies: state.movies,
+    genres: state.genre,
+    directors: state.director
+  };
+};
+
+var _default = (0, _reactRedux.connect)(mapStateToProps)(MovieView);
+
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","prop-types":"../../node_modules/prop-types/index.js","react-redux":"../../node_modules/react-redux/es/index.js","react-bootstrap/Button":"../../node_modules/react-bootstrap/Button.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./movie-view.scss":"components/movie-view/movie-view.scss"}],"components/director-view/director-view.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -46962,7 +46973,19 @@ function (_React$Component) {
       if (!userInfo) return null;
       return _react.default.createElement("div", {
         className: "profile-view"
-      }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday)), _react.default.createElement(_reactRouterDom.Link, {
+      }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favorite Movies:", _react.default.createElement("ul", null, userInfo.favorites.map(function (f) {
+        return _react.default.createElement("li", {
+          key: f
+        }, movies.find(function (m) {
+          return m._id === f;
+        }).title, _react.default.createElement(_Button.default, {
+          variant: "danger",
+          size: "sm",
+          onClick: function onClick() {
+            return _this3.deleteFavorite(f);
+          }
+        }, "Remove"));
+      })))), _react.default.createElement(_reactRouterDom.Link, {
         to: "/users/update/".concat(localStorage.getItem('user'))
       }, _react.default.createElement(_Button.default, null, "Edit")), _react.default.createElement(_Button.default, {
         variant: "danger",
@@ -47238,9 +47261,7 @@ function (_React$Component) {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        _this3.setState({
-          directors: response.data
-        });
+        _this3.props.setDirectors(response.data);
       }).catch(function (error) {
         console.log(error);
       });
@@ -47255,9 +47276,7 @@ function (_React$Component) {
           Authorization: "Bearer ".concat(token)
         }
       }).then(function (response) {
-        _this4.setState({
-          genres: response.data
-        });
+        _this4.props.setGenres(response.data);
       }).catch(function (error) {
         console.log(error);
       });
@@ -47290,12 +47309,9 @@ function (_React$Component) {
 
       var _this$props = this.props,
           movies = _this$props.movies,
-          user = _this$props.user;
-      var _this$state = this.state,
-          directors = _this$state.directors,
-          genres = _this$state.genres;
-      /*	if (!movies) return <div className="main-view"/>;*/
-
+          user = _this$props.user,
+          directors = _this$props.directors,
+          genres = _this$props.genres;
       return _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
         className: "main-view"
       }, _react.default.createElement(_Container.default, null, _react.default.createElement(_Row.default, null, _react.default.createElement(_Col.default, null, _react.default.createElement("header", null, "millenial movies")), _react.default.createElement(_Col.default, {
@@ -47347,8 +47363,8 @@ function (_React$Component) {
             movie: movies.find(function (m) {
               return m._id === match.params.movieId;
             }),
-            genre: genres,
-            director: directors
+            genres: genres,
+            directors: directors
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -47395,13 +47411,17 @@ exports.MainView = MainView;
 var mapStateToProps = function mapStateToProps(state) {
   return {
     movies: state.movies,
-    user: state.user
+    user: state.user,
+    genres: state.genres,
+    directors: state.directors
   };
 };
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, {
   setMovies: _actions.setMovies,
-  setUser: _actions.setUser
+  setUser: _actions.setUser,
+  setGenres: _actions.setGenres,
+  setDirectors: _actions.setDirectors
 })(MainView);
 
 exports.default = _default;
@@ -47456,10 +47476,38 @@ function movies() {
   }
 }
 
+function genres() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions.SET_GENRES:
+      return action.value;
+
+    default:
+      return state;
+  }
+}
+
+function directors() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions.SET_DIRECTORS:
+      return action.value;
+
+    default:
+      return state;
+  }
+}
+
 var moviesApp = (0, _redux.combineReducers)({
   user: user,
   visibilityFilter: visibilityFilter,
-  movies: movies
+  movies: movies,
+  genres: genres,
+  directors: directors
 });
 var _default = moviesApp;
 exports.default = _default;

@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import { SET_USER, SET_FILTER, SET_MOVIES } from '../actions/actions';
+import { SET_USER, SET_FILTER, SET_MOVIES, SET_GENRES, SET_DIRECTORS } from '../actions/actions';
 
 function user(state = [], action) {
 	switch (action.type) {
@@ -29,10 +29,30 @@ function movies(state = [], action) {
 	}
 }
 
+function genres(state = [], action) {
+	switch (action.type) {
+		case SET_GENRES:
+			return action.value;
+		default:
+			return state;
+	}
+}
+
+function directors(state = [], action) {
+	switch (action.type) {
+		case SET_DIRECTORS:
+			return action.value;
+		default:
+			return state;
+	}
+}
+
 const moviesApp = combineReducers({
 	user,
 	visibilityFilter,
-	movies
+	movies,
+	genres,
+	directors
 });
 
 export default moviesApp;

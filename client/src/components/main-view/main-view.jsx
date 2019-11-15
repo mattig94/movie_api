@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { BrowserRouter as Router, Route, Redirect} from "react-router-dom";
 
-import { setUser, setMovies } from '../../actions/actions';
+import { setUser, setMovies, setGenres, setDirectors } from '../../actions/actions';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -68,9 +68,7 @@ export class MainView extends React.Component {
 			headers: { Authorization: `Bearer ${token}` }
 		})
 		.then(response => {
-			this.setState({
-				directors: response.data
-			});
+			this.props.setDirectors(response.data);
 		})
 		.catch(function(error) {
 			console.log(error);
@@ -82,9 +80,7 @@ export class MainView extends React.Component {
 			headers: { Authorization: `Bearer ${token}` }
 		})
 		.then(response => {
-			this.setState({
-				genres: response.data
-			});
+			this.props.setGenres(response.data);
 		})
 		.catch(function(error) {
 			console.log(error);
@@ -111,10 +107,8 @@ export class MainView extends React.Component {
 	}
 
 	render() {
-		let { movies, user } = this.props;
-		const { directors, genres } = this.state;
-
-	/*	if (!movies) return <div className="main-view"/>;*/
+		let { movies, user, directors, genres } = this.props;
+		
 		return (
 			<Router>
 				<div className="main-view">
@@ -147,7 +141,7 @@ export class MainView extends React.Component {
 
 							<Route path="/login" render={() => <LoginView onLoggedIn={user => this.onLoggedIn(user)}/>}/>
 
-							<Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} genre={genres} director={directors}/>}/>
+							<Route path="/movies/:movieId" render={({match}) => <MovieView movie={movies.find(m => m._id === match.params.movieId)} genres={genres} directors={directors}/>}/>
 
 							<Route path="/directors/:directorId" render={({match}) => <DirectorView director={directors.find(d => d._id === match.params.directorId)}/>}/>
 
@@ -167,8 +161,10 @@ export class MainView extends React.Component {
 let mapStateToProps = state => {
 	return {
 		movies: state.movies,
-		user: state.user
+		user: state.user,
+		genres: state.genres,
+		directors: state.directors
 	}
 }
 
-export default connect(mapStateToProps, { setMovies, setUser } )(MainView);
+export default connect(mapStateToProps, { setMovies, setUser, setGenres, setDirectors } )(MainView);
