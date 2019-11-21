@@ -33,6 +33,8 @@ export class MovieView extends React.Component {
 	render() {
 		const { movie, directors, genres } = this.props;
 
+    if (!movie) return null;
+
 		return (
 			<div className="movie-view">
 				<div className="movie-title">
@@ -49,14 +51,14 @@ export class MovieView extends React.Component {
 					<div className="value"><ul>{movie.genres.map(mg => 
             <li key={mg}>
               <Link to={`/genres/${mg}`}>
-                {genres.find(g => g._id === mg).name}
+                {(genres.find(g => g._id === mg)||{}).name}
               </Link>
             </li>)}</ul></div> 	
 				</div>   
         <div className="movie-director">
           <div className="label">Director</div>
           <div className="value"><Link to={`/directors/${movie.director}`}>
-            {directors.find(d => d._id === movie.director).name}
+            {(directors.find(d => d._id === movie.director)||{}).name}
           </Link></div>  
         </div>
         <Button onClick={() => this.addFavorite(movie._id)}>Add to Favorites</Button>
@@ -80,8 +82,8 @@ let mapStateToProps = state => {
   return {
     user: state.user,
     movies: state.movies,
-    genres: state.genre,
-    directors: state.director
+    genres: state.genres,
+    directors: state.directors
   }
 }
 

@@ -46176,6 +46176,7 @@ function (_React$Component) {
           movie = _this$props.movie,
           directors = _this$props.directors,
           genres = _this$props.genres;
+      if (!movie) return null;
       return _react.default.createElement("div", {
         className: "movie-view"
       }, _react.default.createElement("div", {
@@ -46204,9 +46205,9 @@ function (_React$Component) {
           key: mg
         }, _react.default.createElement(_reactRouterDom.Link, {
           to: "/genres/".concat(mg)
-        }, genres.find(function (g) {
+        }, (genres.find(function (g) {
           return g._id === mg;
-        }).name));
+        }) || {}).name));
       })))), _react.default.createElement("div", {
         className: "movie-director"
       }, _react.default.createElement("div", {
@@ -46215,9 +46216,9 @@ function (_React$Component) {
         className: "value"
       }, _react.default.createElement(_reactRouterDom.Link, {
         to: "/directors/".concat(movie.director)
-      }, directors.find(function (d) {
+      }, (directors.find(function (d) {
         return d._id === movie.director;
-      }).name))), _react.default.createElement(_Button.default, {
+      }) || {}).name))), _react.default.createElement(_Button.default, {
         onClick: function onClick() {
           return _this2.addFavorite(movie._id);
         }
@@ -46245,8 +46246,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     user: state.user,
     movies: state.movies,
-    genres: state.genre,
-    directors: state.director
+    genres: state.genres,
+    directors: state.directors
   };
 };
 
@@ -46309,8 +46310,23 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       var director = this.props.director;
-      if (!director) return null;
-      return _react.default.createElement("div", {
+      if (!director) return null;else if (!director.deathYear) return _react.default.createElement("div", {
+        className: "director-view"
+      }, _react.default.createElement("div", {
+        className: "director-name"
+      }, _react.default.createElement("h3", null, director.name)), _react.default.createElement("div", {
+        className: "label"
+      }, "About:"), _react.default.createElement("div", {
+        className: "value"
+      }, director.bio), _react.default.createElement("div", {
+        className: "label"
+      }, "Born:"), _react.default.createElement("div", {
+        className: "value"
+      }, director.birthYear), _react.default.createElement(_reactRouterDom.Link, {
+        to: "/"
+      }, _react.default.createElement(_Button.default, {
+        variant: "info"
+      }, "Back")));else return _react.default.createElement("div", {
         className: "director-view"
       }, _react.default.createElement("div", {
         className: "director-name"

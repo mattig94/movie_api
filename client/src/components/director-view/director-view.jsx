@@ -15,22 +15,38 @@ export class DirectorView extends React.Component {
 	render() {
 		const { director } = this.props;
 		if (!director) return null;
-		return (
-			<div className="director-view">
-				<div className="director-name">
-					<h3>{director.name}</h3>
+		else if (!director.deathYear)
+			return (
+				<div className="director-view">
+					<div className="director-name">
+						<h3>{director.name}</h3>
+					</div>
+					<div className="label">About:</div>
+					<div className="value">{director.bio}</div>
+					<div className="label">Born:</div>
+					<div className="value">{director.birthYear}</div>
+					<Link to={`/`}>
+						<Button variant="info">Back</Button>
+					</Link>
 				</div>
-				<div className="label">About:</div>
-				<div className="value">{director.bio}</div>
-				<div className="label">Born:</div>
-				<div className="value">{director.birthYear}</div>
-				<div className="label">Died:</div>
-				<div className="value">{director.deathYear}</div>
-				<Link to={`/`}>
-					<Button variant="info">Back</Button>
-				</Link>
-			</div>
-		)
+			)
+		else
+			return (
+				<div className="director-view">
+					<div className="director-name">
+						<h3>{director.name}</h3>
+					</div>
+					<div className="label">About:</div>
+					<div className="value">{director.bio}</div>
+					<div className="label">Born:</div>
+					<div className="value">{director.birthYear}</div>
+					<div className="label">Died:</div>
+					<div className="value">{director.deathYear}</div>
+					<Link to={`/`}>
+						<Button variant="info">Back</Button>
+					</Link>
+				</div>
+			)
 	}
 }
 
