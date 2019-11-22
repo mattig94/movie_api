@@ -3,9 +3,6 @@ const express = require('express'),
   bodyParser = require('body-parser');
   mongoose = require('mongoose');
 
-//to host client side
-const path = require('path');
-
 const Models = require('./server/models.js');
 
 const Movies = Models.Movies;
@@ -28,12 +25,6 @@ mongoose.connect('mongodb+srv://admin:69KVSUWOlc70bQJD@cluster0-avxc3.mongodb.ne
 
 //static files come from public folder
 app.use(express.static('public'));
-
-//to host client side
-app.use('/client', express.static(path.join(_dirname, 'dist')));
-app.get ('/client/*', (req, res) => {
-  res.sendFile(path.join(_dirname, 'dist', 'index.html'));
-}); 
 
 //POST and PUT request body info is sent back as json
 app.use(bodyParser.json());
@@ -81,10 +72,9 @@ app.get('/genres', passport.authenticate('jwt', {session: false}), function(req,
   });
 });
 //home page
-// app.get('/', function(req, res) {
-//   res.send('Welcome to myFlix!')
-// });
-app.use(express.static(path.resolve('client/build/dist')));
+app.get('/', function(req, res) {
+  res.send('Welcome to myFlix!')
+});
 //movie by title
 /*app.get('/movies/:title', passport.authenticate('jwt', {session: false}), function(req, res) {
   Movies.findOne({title: req.params.title})
