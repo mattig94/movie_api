@@ -27,9 +27,12 @@ app.use(validator());
 mongoose.connect('mongodb+srv://admin:69KVSUWOlc70bQJD@cluster0-avxc3.mongodb.net/myFlixDB?retryWrites=true&w=majority', {useNewUrlParser: true});
 
 //static files come from public folder
-app.use(express.static('public'));
+app.use(express.static('dist'));
 
 //to host client side
+app.get('/', (req, res) => {
+  res.sendFile(path.resolve('dist/index.html'));
+});
 app.use('/client', express.static(path.join(__dirname, 'dist')));
 app.get ('/client/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist', 'index.html'));

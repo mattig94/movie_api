@@ -53,7 +53,7 @@ export function RegistrationView(props) {
 				<Button type="submit" onClick={handleSubmit}>Register</Button>
 			</Form.Group>
 			<div>
-				<Link to={`/`}>
+				<Link to={`/login`}>
 					<Button variant="secondary">Already Registered?</Button>
 				</Link>
 			</div>

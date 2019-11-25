@@ -46083,7 +46083,7 @@ function RegistrationView(props) {
     type: "submit",
     onClick: handleSubmit
   }, "Register")), _react.default.createElement("div", null, _react.default.createElement(_reactRouterDom.Link, {
-    to: "/"
+    to: "/login"
   }, _react.default.createElement(_Button.default, {
     variant: "secondary"
   }, "Already Registered?"))));
