@@ -47339,7 +47339,7 @@ function (_React$Component) {
     value: function logout() {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.open('/login', '_self');
+      window.open('/client/login', '_self');
     }
   }, {
     key: "render",

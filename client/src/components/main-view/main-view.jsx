@@ -103,7 +103,7 @@ export class MainView extends React.Component {
 	logout() {
 		localStorage.removeItem('token');
 		localStorage.removeItem('user');
-		window.open('/login', '_self');
+		window.open('/client/login', '_self');
 	}
 
 	render() {
