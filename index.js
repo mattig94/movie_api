@@ -30,9 +30,9 @@ mongoose.connect('mongodb+srv://admin:69KVSUWOlc70bQJD@cluster0-avxc3.mongodb.ne
 app.use(express.static('public'));
 
 //to host client side
-app.use('/client', express.static(path.join(_dirname, 'dist')));
+app.use('/client', express.static(path.join(__dirname, 'dist')));
 app.get ('/client/*', (req, res) => {
-  res.sendFile(path.join(_dirname, 'dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 }); 
 
 //POST and PUT request body info is sent back as json
