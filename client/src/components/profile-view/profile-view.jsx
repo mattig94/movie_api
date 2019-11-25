@@ -64,7 +64,7 @@ export class ProfileView extends React.Component {
 		})
 		.then(response => {
 			alert("Movie has been removed from favorites");
-			window.open(`/users/${localStorage.getItem('user')}`, '_self');
+			window.open(`client/users/${localStorage.getItem('user')}`, '_self');
 		})
 		.catch(e => {
 			console.log('There was an issue removing movie from favorites')
@@ -87,7 +87,7 @@ export class ProfileView extends React.Component {
 					<ListGroup.Item>Birthday: {userInfo.birthday}</ListGroup.Item>
 					<ListGroup.Item>Favorite Movies: 
 						<ul>{userInfo.favorites.map(f => 
-							<li key={f}>{movies.find(m => m._id === f).title} 
+							<li key={f}>{(movies.find(m => m._id === f)||{}).title} 
 								<Button variant="danger" size="sm" onClick={() => this.deleteFavorite(f)}>Remove</Button>
 							</li>)}
 						</ul>
@@ -98,7 +98,7 @@ export class ProfileView extends React.Component {
 					</Link>
 					<Button variant="danger" onClick={() => this.deleteUser()}>Delete User</Button>
 					<Link to={`/`}>
-						<Button variant="info">Back</Button>
+						<Button variant="info">Home</Button>
 					</Link>
 			</div>
 		)

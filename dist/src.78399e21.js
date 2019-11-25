@@ -46226,7 +46226,7 @@ function (_React$Component) {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "info"
-      }, "Back")));
+      }, "Home")));
     }
   }]);
 
@@ -46346,7 +46346,7 @@ function (_React$Component) {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "info"
-      }, "Back")));
+      }, "Home")));
     }
   }]);
 
@@ -46427,7 +46427,7 @@ function (_React$Component) {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "info"
-      }, "Back")));
+      }, "Home")));
     }
   }]);
 
@@ -46995,7 +46995,7 @@ function (_React$Component) {
         }
       }).then(function (response) {
         alert("Movie has been removed from favorites");
-        window.open("/users/".concat(localStorage.getItem('user')), '_self');
+        window.open("client/users/".concat(localStorage.getItem('user')), '_self');
       }).catch(function (e) {
         console.log('There was an issue removing movie from favorites');
       });
@@ -47015,9 +47015,9 @@ function (_React$Component) {
       }, _react.default.createElement("h3", null, "My Profile"), _react.default.createElement(_ListGroup.default, null, _react.default.createElement(_ListGroup.default.Item, null, "Username: ", userInfo.username), _react.default.createElement(_ListGroup.default.Item, null, "Password: *****"), _react.default.createElement(_ListGroup.default.Item, null, "Email: ", userInfo.email), _react.default.createElement(_ListGroup.default.Item, null, "Birthday: ", userInfo.birthday), _react.default.createElement(_ListGroup.default.Item, null, "Favorite Movies:", _react.default.createElement("ul", null, userInfo.favorites.map(function (f) {
         return _react.default.createElement("li", {
           key: f
-        }, movies.find(function (m) {
+        }, (movies.find(function (m) {
           return m._id === f;
-        }).title, _react.default.createElement(_Button.default, {
+        }) || {}).title, _react.default.createElement(_Button.default, {
           variant: "danger",
           size: "sm",
           onClick: function onClick() {
@@ -47035,7 +47035,7 @@ function (_React$Component) {
         to: "/"
       }, _react.default.createElement(_Button.default, {
         variant: "info"
-      }, "Back")));
+      }, "Home")));
     }
   }]);
 
