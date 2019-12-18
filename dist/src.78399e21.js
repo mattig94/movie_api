@@ -46046,10 +46046,10 @@ function RegistrationView(props) {
     }).then(function (response) {
       var data = response.data;
       console.log(data);
-      props.onLoggedIn(data);
-      window.open('/client', '_self');
+      window.open('/client/login', '_self');
     }).catch(function (e) {
       console.log('error registering the user');
+      throw e;
     });
   };
 

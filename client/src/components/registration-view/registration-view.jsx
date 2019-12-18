@@ -24,11 +24,11 @@ export function RegistrationView(props) {
 		.then(response => {
 			const data = response.data;
 			console.log(data);
-			props.onLoggedIn(data);
-			window.open('/client', '_self');
+			window.open('/client/login', '_self');
 		})
 		.catch(e => {
 			console.log('error registering the user')
+			throw e;
 		});
 	};
 
