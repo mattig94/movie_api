@@ -24,7 +24,6 @@ export function RegistrationView(props) {
 		.then(response => {
 			const data = response.data;
 			console.log(data);
-			props.onLoggedIn(data);
 			window.open('/client', '_self');
 		})
 		.catch(e => {
