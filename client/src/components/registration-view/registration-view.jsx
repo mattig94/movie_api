@@ -24,7 +24,8 @@ export function RegistrationView(props) {
 		.then(response => {
 			const data = response.data;
 			console.log(data);
-			window.open('/', '_self');
+			props.onLoggedIn(data);
+			window.open('/client', '_self');
 		})
 		.catch(e => {
 			console.log('error registering the user')
