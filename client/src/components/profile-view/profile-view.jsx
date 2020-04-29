@@ -51,7 +51,7 @@ export class ProfileView extends React.Component {
 			alert("Your account has been deleted");
 			localStorage.removeItem('token');
 			localStorage.removeItem('user');
-			window.open('/login', '_self');
+			window.open('/client/login', '_self');
 		})
 		.catch(e => {
 			console.log('There was an issue deleting your account')
